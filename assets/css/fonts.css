@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi.ttf");
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: smooth;
+}

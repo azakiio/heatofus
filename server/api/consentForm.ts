@@ -1,4 +1,4 @@
-import { PDFDocument, rgb } from "pdf-lib";
+import { PDFDocument } from "pdf-lib";
 
 export default defineEventHandler(async (event) => {
   if (event.method === "POST") {

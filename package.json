@@ -7,14 +7,27 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "pulldb": "npx supabase gen types typescript --project-id bbeypvpofsobljpdtjqp --schema public > types/supabase.ts"
   },
   "devDependencies": {
+    "@nuxtjs/supabase": "^1.1.5",
     "nuxt": "^3.9.3",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "pdf-lib": "^1.17.1"
+    "@iconify-json/mdi": "^1.1.64",
+    "@iconify-json/svg-spinners": "^1.1.2",
+    "@nuxt/content": "^2.11.0",
+    "@nuxt/ui": "^2.12.3",
+    "@nuxtjs/markdownit": "^2.0.0",
+    "@types/common-tags": "^1.8.4",
+    "common-tags": "^1.8.2",
+    "marked": "^11.2.0",
+    "openai": "^4.26.0",
+    "pdf-lib": "^1.17.1",
+    "vue-markdown-render": "^2.1.1",
+    "zod": "^3.22.4"
   }
 }
