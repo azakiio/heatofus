@@ -3,6 +3,12 @@ const { data: files, refresh: refreshFiles } = await useFetch(
   "/api/files/list"
 );
 
+useSeoMeta({
+  title: "Halbelf | Custom ChatGPT for your data",
+  description:
+    "Build an AI chatbot from your knowledge base and add it to your website",
+});
+
 const deleteFile = async (file_id: string) => {
   await $fetch("/api/files/delete", {
     query: {
