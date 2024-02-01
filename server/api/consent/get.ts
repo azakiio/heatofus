@@ -2,14 +2,11 @@ import { PDFDocument, rgb } from "pdf-lib";
 import { readdir, readFile } from "node:fs/promises";
 
 export default defineEventHandler(async ({ fetch }) => {
-  // const data = await $fetch('/arzt-formular.pdf', {})
-  const file = await readFile("/arzt-formular.pdf");
-  // const t = await import("~/assets/files/arzt-formular.pdf");
-  // console.log(t);
+  const pdf = await readFile('arzt-formular.pdf')
 
   // const fontBytes = await fetch('/fonts/Allura-Regular.ttf').then((res) => res.arrayBuffer());
 
-  const pdfDoc = await PDFDocument.load(file);
+  const pdfDoc = await PDFDocument.load(pdf);
   // pdfDoc.registerFontkit(fontkit);
   // const signatureFont = await pdfDoc.embedFont(fontBytes);
 
