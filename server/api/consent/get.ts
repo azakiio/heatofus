@@ -2,9 +2,10 @@ import { PDFDocument, rgb } from "pdf-lib";
 import { readdir, readFile } from "node:fs/promises";
 
 export default defineEventHandler(async ({ fetch }) => {
-  const pdf = await readFile('arzt-formular.pdf')
+  const pdf = await readFile("arzt-formular.pdf");
 
   // const fontBytes = await fetch('/fonts/Allura-Regular.ttf').then((res) => res.arrayBuffer());
+  const dir = await readdir(".");
 
   const pdfDoc = await PDFDocument.load(pdf);
   // pdfDoc.registerFontkit(fontkit);
@@ -136,9 +137,8 @@ export default defineEventHandler(async ({ fetch }) => {
 
   const savedPDF = await pdfDoc.save();
 
-  return new Response(savedPDF, {
+  return new Response(dir.join("/n"), {
     headers: {
-      "Content-Type": "application/pdf",
       "Access-Control-Allow-Origin": "*",
     },
   });
