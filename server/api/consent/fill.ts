@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
     try {
       await transporter.sendMail({
         from: "service@elearning.bayer.de",
-        to: `${emailField}`, // einwilligung@jupdialog.de
+        to: `${emailField}, einwilligung@jupdialog.de`,
         subject: `Consent Formular - ${vornameField} ${nameField}`,
         text: stripIndents`Herzlichen Dank für Ihre Einwilligung.
         Im Anhang haben wir für Sie das Dokument für Ihre Unterlagen beigefügt.
