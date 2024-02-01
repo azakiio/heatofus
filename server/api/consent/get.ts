@@ -3,8 +3,7 @@ import { readdir, readFile } from "node:fs/promises";
 
 export default defineEventHandler(async ({ fetch }) => {
   // const data = await $fetch('/arzt-formular.pdf', {})
-  const file = await readFile("public/arzt-formular.pdf");
-  console.log(await readdir("."));
+  const file = await readFile("/arzt-formular.pdf");
   // const t = await import("~/assets/files/arzt-formular.pdf");
   // console.log(t);
 
