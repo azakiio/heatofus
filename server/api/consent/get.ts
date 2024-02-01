@@ -1,20 +1,14 @@
 import { PDFDocument, rgb } from "pdf-lib";
-import { resolve } from "node:path";
-import { readFile } from "node:fs/promises";
 
 export default defineEventHandler(async ({ $fetch }) => {
-  // const pdf = await $fetch("/arzt-formular.pdf", {
-  //   baseURL: "http://localhost:3000",
-  // });
-  const filePath = resolve("./public/arzt-formular.pdf");
-  const pdfBytes = await readFile(filePath);
+  const pdf = await $fetch("/arzt-formular.pdf", {
+    baseURL: "https://heatofus.vercel.app",
+  });
 
-  // const pdfBlob = pdf as Blob;
-  // pdfBlob.arrayBuffer();
+  const pdfBlob = pdf as Blob;
+  const pdfBytes = await pdfBlob.arrayBuffer();
 
   const pdfDoc = await PDFDocument.load(pdfBytes);
-  // pdfDoc.registerFontkit(fontkit);
-  // const signatureFont = await pdfDoc.embedFont(fontBytes);
 
   const form = pdfDoc.getForm();
   const page = pdfDoc.getPage(0);
