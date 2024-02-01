@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   routeRules: {
-    "/api/consentForm": {
+    "/api/consent": {
       cors: true,
     },
   },
