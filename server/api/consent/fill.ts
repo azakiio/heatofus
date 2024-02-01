@@ -1,13 +1,16 @@
-import fs from "fs/promises";
-import path from "path";
-import { PDFDocument } from "pdf-lib";
-import nodemailer from "nodemailer";
 import { stripIndents } from "common-tags";
+import nodemailer from "nodemailer";
+import { PDFDocument } from "pdf-lib";
 
 export default defineEventHandler(async (event) => {
   const formData = await readFormData(event);
-  const filePath = path.resolve("./public/arzt-formular.pdf");
-  const pdfBytes = await fs.readFile(filePath);
+  const pdf = await $fetch("/arzt-formular.pdf", {
+    baseURL: "https://heatofus.vercel.app",
+  });
+
+  const pdfBlob = pdf as Blob;
+  const pdfBytes = await pdfBlob.arrayBuffer();
+
   const pdfDoc = await PDFDocument.load(pdfBytes);
 
   const form = pdfDoc.getForm();
@@ -58,7 +61,7 @@ export default defineEventHandler(async (event) => {
     try {
       await transporter.sendMail({
         from: "service@elearning.bayer.de",
-        to: `einwilligung@jupdialog.de, ${emailField}`,
+        to: `${emailField}`, // einwilligung@jupdialog.de
         subject: `Consent Formular - ${vornameField} ${nameField}`,
         text: stripIndents`Herzlichen Dank für Ihre Einwilligung.
         Im Anhang haben wir für Sie das Dokument für Ihre Unterlagen beigefügt.
