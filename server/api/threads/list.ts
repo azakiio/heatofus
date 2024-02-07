@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   // console.log(data);
 
   const client = await serverSupabaseClient<Database>(event);
-  const { data } = await client.from("threads").select();
+  const { data } = await client.from("threads").select().eq("type", "thread");
 
   return data;
 });

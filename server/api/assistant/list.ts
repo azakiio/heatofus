@@ -1,8 +1,14 @@
-import OpenAI from "openai";
+import { serverSupabaseClient } from "#supabase/server";
+import { Database } from "~/types/supabase";
 
 export default defineEventHandler(async (event) => {
-  const openai = new OpenAI();
+  const client = await serverSupabaseClient<Database>(event);
+  const { data, error } = await client
+    .from("threads")
+    .select(
+      "object_id, type, meta->name, meta->instructions, meta->file_ids, meta->model"
+    )
+    .eq("type", "assistant");
 
-  const assistants = await openai.beta.assistants.list();
-  return assistants.data;
+  return data;
 });

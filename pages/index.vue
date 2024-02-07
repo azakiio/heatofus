@@ -1,55 +1,11 @@
 <script setup lang="ts">
-const { data: files, refresh: refreshFiles } = await useFetch(
-  "/api/files/list"
-);
+import { features } from "~/content/features";
 
 useSeoMeta({
   title: "Halbelf | Custom ChatGPT for your data",
   description:
     "Build an AI chatbot from your knowledge base and add it to your website",
 });
-
-const deleteFile = async (file_id: string) => {
-  await $fetch("/api/files/delete", {
-    query: {
-      file_id,
-    },
-  });
-  refreshFiles();
-};
-
-const dragOver = ref(false);
-
-function handleFiles(files: FileList) {
-  [...files].forEach(uploadFile);
-}
-
-function uploadFile(file: File) {
-  let formData = new FormData();
-
-  formData.append("file", file);
-
-  $fetch("/api/files/upload", {
-    method: "POST",
-    body: formData,
-  })
-    .then(() => {
-      refreshFiles();
-    })
-    .catch(() => {
-      /* Error. Inform the user */
-    });
-}
-
-function handleDrop(e: DragEvent) {
-  dragOver.value = false;
-  e.preventDefault();
-  e.stopPropagation();
-  let files = e.dataTransfer?.files;
-  if (files) {
-    handleFiles(files);
-  }
-}
 
 const steps = [
   "Upload your files",
@@ -59,21 +15,22 @@ const steps = [
 </script>
 
 <template>
-  <main class="grid p-8 place-content-center pb-20 min-h-screen">
-    <h1 class="text-6xl text-center font-bold text-green-500 mb-12">Halbelf</h1>
-    <div class="grid md:grid-cols-2 max-w-5xl mb-20 gap-24 w-full">
+  <div class="justify-center">
+    <section
+      class="layout md:grid-cols-[2fr_1fr] gap-24 w-full h-90vh content-center"
+    >
       <div>
         <h2 class="text-5xl font-bold mb-8">Custom ChatGPT for your website</h2>
         <p class="text-lg font-medium text-black/75 mb-4">
           Build a custom GPT, embed it on your website and let it handle
           customer support, lead generation, engage with your users, and more.
         </p>
-        <UButton to="#try-now" size="xl">Try Now!</UButton>
+        <NuxtLink class="btn btn-green w-fit" to="#try-now" size="xl"
+          >Try Now!</NuxtLink
+        >
       </div>
       <div>
-        <div class="mb-4 font-medium text-xl text-green-500">
-          Three easy steps
-        </div>
+        <div class="mb-4 font-medium text-xl c-green">Three easy steps</div>
 
         <div class="grid grid-rows-[auto,auto,auto] gap-8">
           <div
@@ -89,82 +46,16 @@ const steps = [
           </div>
         </div>
       </div>
-    </div>
-  </main>
+    </section>
 
-  <main id="try-now" class="grid p-8 place-content-center pb-20 h-screen">
-    <div class="font-bold text-center text-4xl mb-8">
-      {{ steps[0] }}
-    </div>
-
-    <label
-      for="fileElem"
-      id="drop-area"
-      class="cursor-pointer hover:bg-slate-200 mb-8"
-      :class="{ 'bg-red-400': dragOver }"
-      @dragenter.prevent.stop="dragOver = true"
-      @dragover.prevent.stop="dragOver = true"
-      @dragleave.prevent.stop="dragOver = false"
-      @drop="handleDrop"
-    >
-      <form class="grid place-items-center mb-10">
-        <UIcon name="i-mdi-tray-upload" class="w-20 h-20" />
-        <div class="font-medium text-lg">Drop Files here</div>
-        <input
-          type="file"
-          id="fileElem"
-          multiple
-          @input="(e) => handleFiles(e.currentTarget.files)"
-        />
-      </form>
-      <div class="flex flex-col gap-2">
-        <div v-for="file in files?.data" class="grid grid-cols-[auto,2rem]">
-          <b>
-            {{ file.filename }}
-          </b>
-          <UButton
-            color="red"
-            @click="() => deleteFile(file.id)"
-            icon="i-mdi-delete"
-          />
-        </div>
+    <section class="layout grid grid-cols-2 gap-16 md:grid-cols-3">
+      <div v-for="feature in features" class="flex flex-col items-start gap-1">
+        <Icon :name="feature.icon" class="w-8 h-8"></Icon>
+        <h5 class="pt-1 text-lg font-medium">{{ feature.title }}</h5>
+        <p class="text-sm font-normal text-zinc-700">
+          {{ feature.description }}
+        </p>
       </div>
-    </label>
-
-    <UButton
-      v-if="files?.data.length && files?.data.length > 0"
-      size="xl"
-      class="place-self-center"
-      to="/2"
-      >Next</UButton
-    >
-  </main>
+    </section>
+  </div>
 </template>
-
-<style scoped>
-main {
-  font-family: "Satoshi";
-}
-
-#drop-area {
-  @apply border-2 border-dashed border-green-500 mx-auto;
-  border-radius: 20px;
-  width: 480px;
-  font-family: sans-serif;
-  padding: 20px;
-}
-.button {
-  display: inline-block;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.button:hover {
-  background: #ddd;
-}
-
-#fileElem {
-  display: none;
-}
-</style>

@@ -13,5 +13,5 @@ export default defineEventHandler(async (event) => {
     assistant_id: assistant_id,
   });
 
-  return { run_id: run.id };
+  return run.id;
 });

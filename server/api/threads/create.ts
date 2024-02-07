@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const thread = await openai.beta.threads.create();
   const { statusText } = await client
     .from("threads")
-    .insert({ thread_id: thread.id });
+    .insert({ object_id: thread.id, type: thread.object });
   console.log(statusText, thread.id);
 
   return { thread_id: thread.id };

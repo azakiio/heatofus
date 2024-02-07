@@ -18,10 +18,10 @@ const signInWithPassword = async () => {
 <template>
   <form
     @submit.prevent="signInWithPassword"
-    class="grid max-w-xl border-2 gap-2 p-4 rounded-lg mx-auto m-8"
+    class="layout w-full content-center max-w-lg"
   >
-    <UInput v-model="email" type="email" placeholder="email" />
-    <UInput v-model="password" type="password" placeholder="password" />
-    <button>Sign In with E-Mail</button>
+    <input v-model="email" type="email" placeholder="email" />
+    <input v-model="password" type="password" placeholder="password" />
+    <button class="btn justify-center">Sign In with E-Mail</button>
   </form>
 </template>

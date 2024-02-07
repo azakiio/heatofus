@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import type { ThreadMessage } from "openai/resources/beta/threads/messages/messages";
 import { marked } from "marked";
+import { pdfDocEncodingDecode } from "pdf-lib";
 const { assistant_id, thread_id } = useRoute().params;
 
 const chatBox = ref<HTMLDivElement>();
 
 const message = ref("");
-const runData = reactive<{
-  runId: string;
-  runStatus: string;
-  messages: ThreadMessage[];
-}>({ runId: "", runStatus: "", messages: [] });
+const runId = ref("");
+const pending = ref(false);
 
 const addMessage = async () => {
-  const { run_id } = await $fetch("/api/threads/chat", {
+  runId.value = await $fetch("/api/threads/chat", {
     method: "post",
     body: {
       thread_id,
@@ -21,9 +18,9 @@ const addMessage = async () => {
       message: message.value,
     },
   });
-  runData.runId = run_id;
+
   refresh();
-  checkStatus();
+  checkRunStatus();
 };
 
 const deleteThread = async () => {
@@ -35,13 +32,15 @@ const deleteThread = async () => {
   navigateTo(`/dashboard/${assistant_id}`);
 };
 
-const {
-  data: messages,
-  refresh,
-  status,
-} = useLazyFetch("/api/threads/messages", {
-  query: { thread_id },
-});
+const { data: messages, refresh } = await useLazyAsyncData(
+  "messages",
+  async () => {
+    const data = await $fetch("/api/threads/messages", {
+      query: { thread_id },
+    });
+    return data;
+  }
+);
 
 watch(
   messages,
@@ -55,78 +54,84 @@ watch(
   { flush: "post" }
 );
 
-const checkStatus = async () => {
-  const { runStatus } = await $fetch("/api/assistant/checkrun", {
-    query: {
-      thread_id: thread_id,
-      run_id: runData.runId,
-    },
-  });
+const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
+  "status",
+  async () => {
+    pending.value = true;
+    const { runStepData } = await $fetch("/api/assistant/checkrun", {
+      query: {
+        thread_id: thread_id,
+        run_id: runId.value,
+      },
+    });
 
-  runData.runStatus = runStatus;
-  if (runStatus === "in_progress") {
-    console.log("still in progress, polling...");
-    setTimeout(checkStatus, 1000);
-  } else {
-    refresh();
-  }
-};
+    if (
+      runStepData.length > 0 &&
+      runStepData.every((step) => step.status === "completed")
+    ) {
+      refresh();
+      pending.value = false;
+    } else {
+      setTimeout(checkRunStatus, 2000);
+    }
+    return runStepData;
+  },
+  { immediate: false }
+);
 </script>
 
 <template>
-  <div class="grid grid-rows-[1fr,auto] h-screen p-4 max-w-xl mx-auto gap-4">
+  <div class="layout grid-rows-[1fr_auto] gap-4 w-full h-90vh">
     <div
       class="grid w-full content-start overflow-auto border-2 rounded-lg gap-4"
       ref="chatBox"
     >
       <div
-        class="grid grid-cols-[2rem,auto] gap-4 p-2"
+        class="grid grid-cols-[2rem_auto] gap-4 p-2"
         v-for="item in messages"
       >
-        <UIcon
+        <Icon
           v-if="item.role === 'user'"
           name="i-mdi-account-circle"
-          class="w-10 h-10"
+          class="w-8 h-8 mt-4"
         />
-        <UIcon
+        <Icon
           v-if="item.role === 'assistant'"
           name="i-mdi-assistant"
-          class="w-10 h-10"
+          class="w-8 h-8 mt-4"
         />
-        <div class="prose" v-html="marked.parse(item.content[0].text.value)" />
+        <div class="prose" v-html="marked.parse(item.content)" />
+      </div>
+
+      <div v-if="pending" class="grid grid-cols-[2rem_auto] gap-4 p-2">
+        <Icon name="i-mdi-assistant" class="w-10 h-10" />
+        <Icon name="line-md:loading-alt-loop" class="w-10 h-10" />
       </div>
     </div>
 
     <form
       @submit.prevent="addMessage"
-      class="grid grid-cols-[1fr,auto] gap-4 w-full"
+      class="grid grid-cols-[1fr_auto] gap-4 w-full"
     >
-      <UInput type="text" v-model="message" class="w-full" size="xl"></UInput>
-      <UButton type="submit">Submit</UButton>
+      <input type="text" v-model="message" class="w-full input" />
+      <button class="btn" type="submit">Submit</button>
     </form>
   </div>
 
   <div class="fixed top-4 left-4 grid gap-4 justify-items-start">
-    <UButton :to="`/dashboard`">Dashboard</UButton>
-    <UButton :to="`/dashboard/${assistant_id}`">Conversations</UButton>
-    <UButton @click="refresh">Refresg Messages</UButton>
-    <UButton color="red" @click="deleteThread">Delete Conversation</UButton>
+    <button :to="`/dashboard`">Dashboard</button>
+    <button :to="`/dashboard/${assistant_id}`">Conversations</button>
+    <button @click="() => refresh()">Refresh Messages</button>
+    <button color="red" @click="deleteThread">Delete Conversation</button>
+    <button color="red" @click="() => checkRunStatus()">CHeck Run</button>
   </div>
 
   <div class="fixed bottom-4 left-4">
-    <div>{{ assistant_id }}</div>
-    <div class="mb-4">{{ thread_id }}</div>
-    <div>run_id: {{ runData?.runId }}</div>
-    <div>thread_state: {{ status }}</div>
-    <div
-      :class="{
-        'text-yellow-500':
-          runData.runStatus === 'in_progress' || runData.runStatus === 'queued',
-        'text-green-500': runData.runStatus === 'completed',
-        'text-red-500': runData.runStatus === 'failed',
-      }"
-    >
-      status: {{ runData.runStatus }}
+    <div v-for="step in runStepData">
+      <div>{{ step.status }}</div>
+      <div>
+        {{ step.type }}
+      </div>
     </div>
   </div>
 </template>

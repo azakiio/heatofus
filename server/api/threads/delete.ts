@@ -11,8 +11,8 @@ export default defineEventHandler<{ query: { thread_id: string } }>(
     const { statusText } = await client
       .from("threads")
       .delete()
-      .eq("thread_id", thread_id);
-    console.log(statusText, thread.id);
+      .eq("object_id", thread_id);
+    console.log(statusText, thread);
 
     return { thread_id: thread.id };
   }

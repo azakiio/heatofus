@@ -1,4 +1,6 @@
+import { serverSupabaseClient } from "#supabase/server";
 import OpenAI from "openai";
+import { Database } from "~/types/supabase";
 
 export default eventHandler(async (event) => {
   const openai = new OpenAI();
@@ -16,5 +18,10 @@ export default eventHandler(async (event) => {
     file_id: uploadedFile.id,
   });
 
-  console.log(result);
+  const client = await serverSupabaseClient<Database>(event);
+  const { statusText } = await client
+    .from("threads")
+    .insert({ object_id: uploadedFile.id, type: uploadedFile.object });
+
+  console.log(statusText, result);
 });
