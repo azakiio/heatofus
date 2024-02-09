@@ -53,8 +53,8 @@ const user = useSupabaseUser();
     <button
       class="btn mt-a self-center"
       @click="
-        () => {
-          client.auth.signOut;
+        async () => {
+          await client.auth.signOut();
           navigateTo('/auth/login');
         }
       "
