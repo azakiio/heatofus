@@ -57,7 +57,7 @@ const createAssistant = async () => {
             {{ assistant.name }}
           </NuxtLink>
           <button
-            class="btn btn-red p-2 rounded-full"
+            class="btn variant-red p-2 rounded-full"
             @click="deleteAssistant(assistant.object_id || '')"
           >
             <div class="i-mdi-delete"></div>

@@ -11,7 +11,7 @@ const steps = [
 <template>
   <div class="justify-center">
     <section
-      class="layout md:grid-cols-[2fr_1fr] gap-24 w-full h-90vh content-center"
+      class="layout md:grid-cols-[2fr_1fr] gap-24 w-full content-center min-h-90vh"
     >
       <div>
         <h2 class="text-5xl font-bold mb-8">Custom ChatGPT for your website</h2>
@@ -19,7 +19,7 @@ const steps = [
           Build a custom GPT, embed it on your website and let it handle
           customer support, lead generation, engage with your users, and more.
         </p>
-        <NuxtLink class="btn btn-green w-fit" to="#try-now" size="xl"
+        <NuxtLink class="btn variant-green w-fit" to="/auth/signup" size="xl"
           >Try Now!</NuxtLink
         >
       </div>
@@ -43,7 +43,7 @@ const steps = [
     </section>
 
     <section
-      class="layout grid grid-cols-2 gap-16 md:grid-cols-3 place-content-center mb-24"
+      class="layout grid grid-cols-2 gap-16 md:grid-cols-3 place-content-center my-24"
     >
       <div v-for="feature in features" class="flex flex-col items-start gap-1">
         <Icon :name="feature.icon" class="w-8 h-8"></Icon>

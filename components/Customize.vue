@@ -57,7 +57,7 @@ const submit = async (e: Event) => {
           </option>
         </select>
       </div>
-      <button class="btn btn-blue absolute right-0 bottom-4">save</button>
+      <button class="btn variant-blue absolute right-0 bottom-4">save</button>
     </form>
   </section>
 </template>

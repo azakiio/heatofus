@@ -2,6 +2,7 @@
 import { plans } from "~/content/plans";
 
 const plansList = Object.values(plans);
+const yearly = ref(false);
 </script>
 
 <template>
@@ -9,11 +10,23 @@ const plansList = Object.values(plans);
     class="layout flex flex-col place-content-start w-full gap-4 max-w-7xl"
   >
     <div class="flex flex-col self-center items-center">
-      <div class="font-bold text-3xl">Pricing Plans</div>
-      <div>Get 2 months for free by subscribing yearly!</div>
-      <div class="flex gap-4 my-6">
-        <button class="btn">Monthly billing</button>
-        <button class="btn">Yearly billing</button>
+      <div class="font-bold text-3xl mb-6">Pricing Plans</div>
+      <div class="font-medium">Get 2 months for free by subscribing yearly!</div>
+      <div class="flex gap-4 p-4">
+        <button
+          class="btn"
+          :class="{ 'variant-blue': yearly === false }"
+          @click="yearly = false"
+        >
+          Monthly billing
+        </button>
+        <button
+          class="btn"
+          :class="{ 'variant-blue': yearly }"
+          @click="yearly = true"
+        >
+          Yearly billing
+        </button>
       </div>
     </div>
 
@@ -36,8 +49,12 @@ const plansList = Object.values(plans);
         </div>
         <div class="p-4 mt-auto self-center flex flex-col items-center">
           <div class="mb-2">
-            <span class="text-3xl font-bold"> {{ plan.pricePerMonth }}/</span>
-            <span class="text-lg font-medium">month</span>
+            <span class="text-3xl font-bold">
+              {{ yearly ? plan.pricePerYear : plan.pricePerMonth }}/</span
+            >
+            <span class="text-lg font-medium">{{
+              yearly ? "year" : "month"
+            }}</span>
           </div>
           <button class="btn bg-dark c-light">
             {{ plan?.cta || "Subscribe" }}

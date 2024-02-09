@@ -85,7 +85,7 @@ function uploadFile(file: File) {
             {{ file.name }}
           </div>
           <button
-            class="btn-red p-2 rounded-full justify-self-end text-lg"
+            class="btn variant-red p-2 rounded-full justify-self-end text-lg"
             @click="() => deleteFile(file.object_id || '')"
           >
             <div class="i-mdi-delete"></div>
