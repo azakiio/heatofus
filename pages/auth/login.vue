@@ -10,7 +10,7 @@ const Login = async () => {
   });
 
   if (!error) {
-    navigateTo("/");
+    navigateTo("/dashboard");
   }
   if (error) console.log(error);
 };
@@ -77,7 +77,7 @@ const Login = async () => {
       <a class="place-self-end link" type="button" href="/auth/password-reset"
         >Forgot password?</a
       >
-      <button class="neutral-btn" type="submit">Log in</button>
+      <button class="btn justify-center bg-fg c-bg" type="submit">Log in</button>
     </form>
     <div class="text-md flex justify-center">
       Don't have an account? &nbsp;<NuxtLink class="link" href="/auth/signup"
@@ -94,7 +94,7 @@ const Login = async () => {
         >
       </div>
     </div>
-    <button class="neutral-btn">
+    <button class="neutral-btn bg-fg c-bg">
       <div class="i-logos-google-icon"></div>
       Google
     </button>

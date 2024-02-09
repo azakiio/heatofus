@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const { data, error } = await client
     .from("threads")
     .select(
-      "object_id, type, meta->name, meta->instructions, meta->file_ids, meta->model"
+      "object_id, type, name, meta->instructions, meta->model"
     )
     .eq("type", "assistant");
 

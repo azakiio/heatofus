@@ -1,5 +1,12 @@
 export const features = [
   {
+    title: "Instant Training",
+    description:
+      "Your chatbot is always up-to-date with the uploaded files.",
+    icon: "heroicons:cpu-chip",
+  },
+
+  {
     title: "Customizations",
     description:
       "Customize your chatbot’s look and feel to match your brand’s style and website design.",
@@ -7,7 +14,7 @@ export const features = [
   },
   {
     title: "Whitelabel",
-    description: "Remove Chatbase branding and use a custom domain.",
+    description: "Remove Halbelf branding and use a custom domain.",
     icon: "heroicons:tag",
   },
   {

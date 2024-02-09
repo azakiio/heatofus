@@ -1,7 +1,13 @@
 <script setup lang="ts">
-const { data, refresh } = await useFetch("/api/assistant/list");
-const { data: files, refresh: refreshFiles } = await useFetch(
-  "/api/assistant/listFiles"
+definePageMeta({
+  middleware: ["auth"],
+});
+
+const { data: assistantList, refresh: refreshAssistants } = await useLazyFetch(
+  "/api/assistant/list"
+);
+const { data: files, refresh: refreshFiles } = await useLazyFetch(
+  "/api/files/list"
 );
 
 const deleteAssistant = async (assistant_id?: string) => {
@@ -10,33 +16,31 @@ const deleteAssistant = async (assistant_id?: string) => {
       assistant_id: assistant_id,
     },
   });
-  await refresh();
+  await refreshAssistants();
 };
 
-const deleteAssistantFile = async (assistant_id: string, file_id: string) => {
-  await $fetch("/api/assistant/deleteFile", {
+const deleteFile = async (assistant_id: string, file_id: string) => {
+  await $fetch("/api/files/delete", {
     query: {
       assistant_id,
       file_id,
     },
   });
-  await refresh();
-};
-
-const deleteFile = async (file_id: string) => {
-  await $fetch("/api/files/delete", {
-    query: {
-      file_id,
-    },
-  });
-  refreshFiles();
+  await refreshFiles();
 };
 
 const submit = async (e: Event) => {
-  await $fetch("/api/assistant/upload", {
+  await $fetch("/api/files/upload", {
     method: "post",
     body: new FormData(e.currentTarget as HTMLFormElement),
   });
+
+  refreshFiles();
+};
+
+const createAssistant = async () => {
+  const assistant = await $fetch("/api/assistant/create", { method: "post" });
+  navigateTo(`/dashboard/${assistant.id}`);
 };
 </script>
 
@@ -44,7 +48,7 @@ const submit = async (e: Event) => {
   <section class="layout">
     <div class="grid grid-cols-3 gap-6 place-content-start">
       <div
-        v-for="assistant in data"
+        v-for="assistant in assistantList"
         :key="assistant.object_id || ''"
         class="flex flex-col gap-4 justify-items-start border-2 rounded-lg p-4"
       >
@@ -66,43 +70,36 @@ const submit = async (e: Event) => {
         <div class="grid gap-2 mt-auto">
           <div
             class="grid grid-cols-[1fr_2rem] items-center gap-4"
-            v-for="file_id in assistant.file_ids"
+            v-for="file in files?.filter(
+              (file) => file.assistant_id === assistant.object_id
+            )"
           >
             <div
               class="font-medium font-italic whitespace-nowrap overflow-hidden overflow-ellipsis"
             >
-              {{
-                files?.data.find((file) => file.id === file_id)?.filename ||
-                file_id
-              }}
+              {{ file.name }}
             </div>
             <button
               class="aspect-square rounded-full grid place-content-center shadow"
               @click="
-                () => deleteAssistantFile(assistant.object_id || '', file_id)
+                () => {
+                  if (file.assistant_id) {
+                    deleteFile(file.assistant_id, file.object_id);
+                  }
+                }
               "
             >
               <div class="i-mdi-close w-4 h-4 text-fg"></div>
             </button>
           </div>
         </div>
-
-        <form @submit.prevent="submit" class="flex flex-col gap-2 items-center">
-          <input
-            name="assistant_id"
-            type="hidden"
-            :value="assistant.object_id"
-          />
-          <input name="file" type="file" class="input" />
-          <button class="btn" type="submit">submit</button>
-        </form>
       </div>
-      <NuxtLink
-        to="/create"
+      <button
+        @click="createAssistant"
         class="link p-10 rounded-lg border-2 place-self-center"
       >
         Add Assistant
-      </NuxtLink>
+      </button>
     </div>
   </section>
 </template>

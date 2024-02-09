@@ -1,6 +1,13 @@
 <script setup lang="ts">
-const { data: files, refresh: refreshFiles } = await useFetch(
-  "/api/files/list"
+const { assistant_id } = useRoute().params;
+
+const { data: files, refresh: refreshFiles } = await useLazyFetch(
+  "/api/files/list",
+  {
+    query: {
+      assistant_id,
+    },
+  }
 );
 
 function handleDrop(e: DragEvent) {
@@ -16,6 +23,7 @@ function handleDrop(e: DragEvent) {
 const deleteFile = async (file_id: string) => {
   await $fetch("/api/files/delete", {
     query: {
+      assistant_id,
       file_id,
     },
   });
@@ -24,14 +32,14 @@ const deleteFile = async (file_id: string) => {
 
 const dragOver = ref(false);
 
-function handleFiles(files: FileList) {
-  [...files].forEach(uploadFile);
+async function handleFiles(files: FileList) {
+  [...files].forEach((file) => uploadFile(file));
 }
 
 function uploadFile(file: File) {
   let formData = new FormData();
-
   formData.append("file", file);
+  formData.append("assistant_id", assistant_id as string);
 
   $fetch("/api/files/upload", {
     method: "POST",
@@ -47,13 +55,11 @@ function uploadFile(file: File) {
 </script>
 
 <template>
-  <section id="try-now" class="layout w-full max-w-xl h-90vh content-center">
-    <div class="font-bold text-center text-4xl mb-8">Upload your files</div>
-
+  <section>
+    <div class="font-bold text-3xl mb-4">Assistant Files</div>
     <label
       for="fileElem"
-      id="drop-area"
-      class="cursor-pointer mb-8 w-full border-2 border-dashed mx-auto p-6 rounded-lg"
+      class="cursor-pointer w-full border-2 border-dashed border-primary mx-auto p-6 rounded-lg grid"
       :class="{ 'bg-red-400': dragOver }"
       @dragenter.prevent.stop="dragOver = true"
       @dragover.prevent.stop="dragOver = true"
@@ -72,11 +78,11 @@ function uploadFile(file: File) {
         />
       </form>
       <div class="grid gap-2">
-        <div v-for="file in files" class="grid grid-cols-[1fr_2rem]">
+        <div v-for="file in files" class="grid grid-cols-[1fr_2rem] gap-4">
           <div
             class="font-medium font-italic whitespace-nowrap overflow-hidden overflow-ellipsis"
           >
-            {{ file.name || file.object_id }}
+            {{ file.name }}
           </div>
           <button
             class="btn-red p-2 rounded-full justify-self-end text-lg"
@@ -87,14 +93,5 @@ function uploadFile(file: File) {
         </div>
       </div>
     </label>
-
-    <NuxtLink
-      v-if="files?.length && files?.length > 0"
-      size="xl"
-      class="btn btn-green place-self-center"
-      to="/create/2"
-    >
-      Next
-    </NuxtLink>
   </section>
 </template>

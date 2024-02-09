@@ -2,14 +2,12 @@ import { serverSupabaseClient } from "#supabase/server";
 import OpenAI from "openai";
 import { Database } from "~/types/supabase";
 
-export default defineEventHandler<{
-  body: { instructions?: string; model?: string; file_ids: string[] };
-}>(async (event) => {
+export default defineEventHandler(async (event) => {
   const openai = new OpenAI();
   const body = await readBody(event);
 
   const assistant = await openai.beta.assistants.create({
-    name: "Customer Support",
+    name: body?.name || "Customer Support Bot",
     instructions:
       body?.instructions ||
       "You are a customer support chatbot. Use your knowledge base to best respond to customer queries.",
@@ -22,14 +20,13 @@ export default defineEventHandler<{
   const { statusText } = await client.from("threads").insert({
     object_id: assistant.id,
     type: assistant.object,
+    name: assistant.name,
     meta: {
-      name: assistant.name,
       model: assistant.model,
       instructions: assistant?.instructions,
-      file_ids: assistant?.file_ids,
     },
   });
   console.log(statusText, assistant);
 
-  return { assistant_id: assistant.id };
+  return assistant;
 });

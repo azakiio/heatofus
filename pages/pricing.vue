@@ -1,0 +1,49 @@
+<script setup>
+import { plans } from "~/content/plans";
+
+const plansList = Object.values(plans);
+</script>
+
+<template>
+  <section
+    class="layout flex flex-col place-content-start w-full gap-4 max-w-7xl"
+  >
+    <div class="flex flex-col self-center items-center">
+      <div class="font-bold text-3xl">Pricing Plans</div>
+      <div>Get 2 months for free by subscribing yearly!</div>
+      <div class="flex gap-4 my-6">
+        <button class="btn">Monthly billing</button>
+        <button class="btn">Yearly billing</button>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="flex flex-col border-2 rounded-lg" v-for="plan in plansList">
+        <div class="p-4 text-3xl font-bold">
+          {{ plan.name }}
+        </div>
+        <div class="flex flex-col gap-2 p-4">
+          <div
+            class="flex items-start gap-1 text-sm font-semibold"
+            v-for="feature in plan.features"
+          >
+            <Icon
+              name="heroicons:check"
+              class="c-green-600 w-5 h-5 flex-shrink-0"
+            ></Icon>
+            <div>{{ feature }}</div>
+          </div>
+        </div>
+        <div class="p-4 mt-auto self-center flex flex-col items-center">
+          <div class="mb-2">
+            <span class="text-3xl font-bold"> {{ plan.pricePerMonth }}/</span>
+            <span class="text-lg font-medium">month</span>
+          </div>
+          <button class="btn bg-dark c-light">
+            {{ plan?.cta || "Subscribe" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>

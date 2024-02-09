@@ -3,12 +3,12 @@ import { iframeScript, bubbleScript } from "./scripts";
 </script>
 
 <template>
-  <main class="layout content-center">
-    <div class="font-bold text-center text-3xl mb-8">Embed on your website</div>
+  <section>
+    <div class="font-bold text-3xl mb-4">Embed on your website</div>
     <div
-      class="grid grid-cols-2 w-full gap-8 border border-zinc-200 bg-white p-6 shadow-lg sm:rounded-lg dark:border-zinc-800 dark:bg-zinc-950 h-auto max-w-3xl overflow-y-auto lg:w-auto"
+      class="grid w-full gap-8 border border-zinc-200 bg-white p-6 shadow-lg sm:rounded-lg dark:border-zinc-800 dark:bg-zinc-950 h-auto max-w-3xl overflow-y-auto lg:w-auto"
     >
-      <div class="flex flex-col gap-4">
+      <!-- <div class="flex flex-col gap-4">
         <div class="-mb-2">
           <p class="text-sm text-zinc-500">
             To add the chatbot any where on your website, add this iframe to
@@ -26,10 +26,10 @@ import { iframeScript, bubbleScript } from "./scripts";
           Copy iframe
           <span class="i-mdi-content-copy" />
         </button>
-      </div>
+      </div> -->
 
       <div class="flex flex-col gap-4">
-        <div class="-mb-2">
+        <div>
           <p class="text-sm text-zinc-500">
             To add a chat bubble to the bottom right of your website add this
             script tag to your html
@@ -47,11 +47,5 @@ import { iframeScript, bubbleScript } from "./scripts";
         </button>
       </div>
     </div>
-    <div class="flex gap-4 items-center justify-center mt-8">
-      <NuxtLink size="xl" class="btn place-self-center" to="/create/2"
-        >Back</NuxtLink
-      >
-      <NuxtLink size="xl" class="btn place-self-center" to="/create/try">Try</NuxtLink>
-    </div>
-  </main>
+  </section>
 </template>

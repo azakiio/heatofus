@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { marked } from "marked";
-import { pdfDocEncodingDecode } from "pdf-lib";
+
+definePageMeta({
+  middleware: ["auth"],
+});
+
 const { assistant_id, thread_id } = useRoute().params;
 
 const chatBox = ref<HTMLDivElement>();
@@ -81,49 +85,55 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
 </script>
 
 <template>
-  <div class="layout grid-rows-[1fr_auto] gap-4 w-full h-90vh">
+  <div class="layout gap-4 w-full relative">
     <div
-      class="grid w-full content-start overflow-auto border-2 rounded-lg gap-4"
-      ref="chatBox"
+      class="flex gap-4 justify-items-start content-start absolute top-10 right-8"
     >
-      <div
-        class="grid grid-cols-[2rem_auto] gap-4 p-2"
-        v-for="item in messages"
+      <button
+        class="p-2 hover:bg-red hover:text-red-1 transition-colors duration- rounded-lg"
+        title="delete conversation"
+        @click="deleteThread"
       >
-        <Icon
-          v-if="item.role === 'user'"
-          name="i-mdi-account-circle"
-          class="w-8 h-8 mt-4"
-        />
-        <Icon
-          v-if="item.role === 'assistant'"
-          name="i-mdi-assistant"
-          class="w-8 h-8 mt-4"
-        />
-        <div class="prose" v-html="marked.parse(item.content)" />
-      </div>
-
-      <div v-if="pending" class="grid grid-cols-[2rem_auto] gap-4 p-2">
-        <Icon name="i-mdi-assistant" class="w-10 h-10" />
-        <Icon name="line-md:loading-alt-loop" class="w-10 h-10" />
-      </div>
+        <div class="i-mdi-delete"></div>
+      </button>
+      <NuxtLink :to="`/dashboard/${assistant_id}`" class="link">back</NuxtLink>
     </div>
+    <div class="grid grid-rows-[1fr_auto] gap-4">
+      <div
+        class="grid w-full content-start overflow-auto border-2 rounded-lg"
+        ref="chatBox"
+      >
+        <div
+          class="grid grid-cols-[2rem_auto] gap-4 p-2"
+          v-for="item in messages"
+        >
+          <Icon
+            v-if="item.role === 'user'"
+            name="i-mdi-account-circle"
+            class="w-8 h-8 mt-4"
+          />
+          <Icon
+            v-if="item.role === 'assistant'"
+            name="i-mdi-assistant"
+            class="w-8 h-8 mt-4"
+          />
+          <div class="prose" v-html="marked.parse(item.content)" />
+        </div>
 
-    <form
-      @submit.prevent="addMessage"
-      class="grid grid-cols-[1fr_auto] gap-4 w-full"
-    >
-      <input type="text" v-model="message" class="w-full input" />
-      <button class="btn" type="submit">Submit</button>
-    </form>
-  </div>
+        <div v-if="pending" class="grid grid-cols-[2rem_auto] gap-4 p-2">
+          <Icon name="i-mdi-assistant" class="w-10 h-10" />
+          <Icon name="line-md:loading-alt-loop" class="w-10 h-10" />
+        </div>
+      </div>
 
-  <div class="fixed top-4 left-4 grid gap-4 justify-items-start">
-    <button :to="`/dashboard`">Dashboard</button>
-    <button :to="`/dashboard/${assistant_id}`">Conversations</button>
-    <button @click="() => refresh()">Refresh Messages</button>
-    <button color="red" @click="deleteThread">Delete Conversation</button>
-    <button color="red" @click="() => checkRunStatus()">CHeck Run</button>
+      <form
+        @submit.prevent="addMessage"
+        class="grid grid-cols-[1fr_auto] gap-4 w-full"
+      >
+        <input type="text" v-model="message" class="w-full input" />
+        <button class="btn" type="submit">Submit</button>
+      </form>
+    </div>
   </div>
 
   <div class="fixed bottom-4 left-4">

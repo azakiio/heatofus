@@ -10,7 +10,7 @@ const signUp = async () => {
   });
 
   if (!error) {
-    navigateTo("/");
+    navigateTo("/dashboard");
   }
   if (error) console.log(error);
 };
@@ -75,7 +75,7 @@ const signUp = async () => {
           </button>
         </div>
       </div>
-      <button class="neutral-btn" type="submit">Sign up</button>
+      <button class="neutral-btn bg-fg c-bg" type="submit">Sign up</button>
     </form>
     <div class="text-md flex justify-center">
       Already have an account? &nbsp;<a class="link" href="/auth/signin"
@@ -92,7 +92,7 @@ const signUp = async () => {
         >
       </div>
     </div>
-    <button class="neutral-btn">
+    <button class="neutral-btn bg-fg c-bg">
       <div class="i-logos-google-icon"></div>
       Google
     </button>

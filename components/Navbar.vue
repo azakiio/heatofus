@@ -15,8 +15,6 @@ const scrolledPast = ref(false);
 
 const handleScroll = () => {
   scrolledPast.value = window.scrollY > 20;
-  console.log("hello");
-  console.log(scrolledPast.value);
 };
 
 onMounted(() => {
@@ -32,7 +30,7 @@ onMounted(() => {
     }"
   >
     <div
-      class="grid grid-flow-col auto-cols-fr p-4 items-center max-w-5xl mx-a h-full"
+      class="grid grid-flow-col auto-cols-fr p-2 items-center max-w-5xl mx-a h-full"
     >
       <NuxtLink to="/" class="c-green font-bold text-xl">Halbelf</NuxtLink>
       <nav class="justify-self-center flex gap-4">
@@ -41,8 +39,12 @@ onMounted(() => {
         }}</NuxtLink>
       </nav>
       <div v-if="user?.id" class="flex gap-4 items-center justify-self-end">
-        <div>{{ user.email }}</div>
-        <NuxtLink to="/dashboard" class="neutral-btn">Dashboard</NuxtLink>
+        <NuxtLink to="/dashboard" class="btn p-2 rounded-full bg-transparent border" active-class="c-green">
+          <Icon name="ic:round-dashboard" class="h-6 w-6"
+        /></NuxtLink>
+        <NuxtLink class="btn p-2 rounded-full bg-transparent border" to="/profile" active-class="c-green"
+          ><Icon name="mdi:account-circle" class="h-6 w-6"
+        /></NuxtLink>
       </div>
       <div v-else class="flex gap-4 items-center justify-self-end">
         <NuxtLink to="/auth/login" class="link">Log in</NuxtLink>

@@ -48,7 +48,7 @@ const steps = [
       </div>
     </section>
 
-    <section class="layout grid grid-cols-2 gap-16 md:grid-cols-3">
+    <section class="layout grid grid-cols-2 gap-16 md:grid-cols-3 place-content-center mb-24">
       <div v-for="feature in features" class="flex flex-col items-start gap-1">
         <Icon :name="feature.icon" class="w-8 h-8"></Icon>
         <h5 class="pt-1 text-lg font-medium">{{ feature.title }}</h5>
