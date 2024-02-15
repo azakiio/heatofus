@@ -144,7 +144,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
         v-for="{ role, content } in messages"
       >
         <div
-          class="p-2 rounded-lg w-fit"
+          class="p-2 rounded-lg w-fit shadow-lg"
           :class="{
             'mr-8 justify-self-start bg-stone-200': role === 'assistant',
             'ml-8 justify-self-end bg-green-500 c-white': role === 'user',
@@ -153,9 +153,11 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
         />
       </div>
 
-      <div v-if="pending" class="grid grid-cols-[2rem_auto] gap-4 p-2">
-        <Icon name="i-mdi-assistant" class="w-10 h-10" />
-        <Icon name="line-md:loading-alt-loop" class="w-10 h-10" />
+      <div v-if="pending" class="grid p-2">
+        <Icon
+          name="eos-icons:three-dots-loading"
+          class="w-10 h-10 c-stone"
+        />
       </div>
     </div>
 
