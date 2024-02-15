@@ -80,7 +80,7 @@ async function embedChatWidget() {
   // Create and configure the chat iframe which will load the chat interface.
   const chatIframe = document.createElement("iframe");
   chatIframe.src =
-    "http://localhost:3000/iframe?assistant_id=asst_ZXwICVen8ksFbjxkZcE8i4rA";
+    "https://heatofus.vercel.app/iframe?assistant_id=asst_ZXwICVen8ksFbjxkZcE8i4rA";
   chatIframe.id = chatWidgetIframeId;
   // Set initial styles for the chat iframe. It starts hidden and will be shown when the chat button is clicked.
   chatIframe.style.display = "none";
