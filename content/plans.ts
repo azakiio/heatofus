@@ -19,9 +19,11 @@ export const plans = {
     ],
     pricePerMonth: "$0",
     pricePerYear: "$0",
-    cta: 'Get Started'
+    monthUrl: "/auth/signup",
+    yearUrl: "/auth/signup",
+    cta: "Get Started",
   },
-  hobby: {
+  prod_PX0EO2QTg9Z6kc: {
     name: "Hobby",
     features: [
       "2,000 message credits/month",
@@ -35,8 +37,10 @@ export const plans = {
     ],
     pricePerMonth: "$19",
     pricePerYear: "$190",
+    monthUrl: "https://buy.stripe.com/test_aEUaH93PUbA66Gc7sx",
+    yearUrl: "https://buy.stripe.com/test_4gw6qT2LQeMifcIeV0",
   },
-  standard: {
+  prod_PX0Guo8ZFa25M6: {
     name: "Standard",
     features: [
       "10,000 message credits/month",
@@ -51,8 +55,10 @@ export const plans = {
     ],
     pricePerMonth: "$99",
     pricePerYear: "$990",
+    monthUrl: "https://buy.stripe.com/test_3cs6qT72647E4y43cf",
+    yearUrl: "https://buy.stripe.com/test_7sI6qT86agUq6Gc7sw",
   },
-  unlimited: {
+  prod_PX0G6DWHtaC2RQ: {
     name: "Unlimited",
     features: [
       "40,000 message credits/month (Messages over the limit will use your OpenAI API Key)",
@@ -70,6 +76,8 @@ export const plans = {
     ],
     pricePerMonth: "$399",
     pricePerYear: "$3990",
+    monthUrl: "https://buy.stripe.com/test_00geXpcmq7jQ5C8dQR",
+    yearUrl: "https://buy.stripe.com/test_eVadTlcmq5bIggM4gi",
   },
 } as const;
 

@@ -17,9 +17,7 @@ const Login = async () => {
 </script>
 
 <template>
-  <div
-    class="mx-auto flex max-w-sm flex-col justify-center space-y-6 justify-self-center"
-  >
+  <div class="layout max-w-sm content-center space-y-6">
     <div class="flex flex-col space-y-2 text-center">
       <h1 class="text-center text-2xl font-semibold tracking-tight">
         Welcome Back

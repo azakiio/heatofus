@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@unocss/nuxt", "@nuxtjs/supabase", 'nuxt-icon'],
+  modules: ["@unocss/nuxt", "@nuxtjs/supabase", "nuxt-icon"],
   unocss: {
-    safelist: ['i-heroicons:paint-brush', 'i-heroicons:tag']
+    safelist: ["i-heroicons:paint-brush", "i-heroicons:tag"],
   },
   routeRules: {
     "/api/consent": {
@@ -14,5 +14,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    STRIPE_SECRET: process.env.STRIPE_SECRET,
+    STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
   },
 });

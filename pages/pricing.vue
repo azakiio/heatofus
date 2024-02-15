@@ -1,6 +1,6 @@
 <script setup>
 import { plans } from "~/content/plans";
-
+const user = useSupabaseUser();
 const plansList = Object.values(plans);
 const yearly = ref(false);
 </script>
@@ -11,7 +11,9 @@ const yearly = ref(false);
   >
     <div class="flex flex-col self-center items-center">
       <div class="font-bold text-3xl mb-6">Pricing Plans</div>
-      <div class="font-medium">Get 2 months for free by subscribing yearly!</div>
+      <div class="font-medium">
+        Get 2 months for free by subscribing yearly!
+      </div>
       <div class="flex gap-4 p-4">
         <button
           class="btn"
@@ -56,9 +58,16 @@ const yearly = ref(false);
               yearly ? "year" : "month"
             }}</span>
           </div>
-          <button class="btn bg-dark c-light">
+          <NuxtLink
+            :to="
+              yearly
+                ? `${plan.yearUrl}?prefilled_email=${user?.email}`
+                : `${plan.monthUrl}?prefilled_email=${user?.email}`
+            "
+            class="btn bg-dark c-light"
+          >
             {{ plan?.cta || "Subscribe" }}
-          </button>
+          </NuxtLink>
         </div>
       </div>
     </div>

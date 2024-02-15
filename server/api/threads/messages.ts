@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 
-export default eventHandler<{ query: { thread_id: string } }>(async (event) => {
+export default defineEventHandler(async (event) => {
   const openai = new OpenAI();
-  const { thread_id } = getQuery(event);
+  const thread_id = getQuery(event).thread_id as string;
   const messages = await openai.beta.threads.messages.list(thread_id, {
     order: "asc",
   });
