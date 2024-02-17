@@ -3,6 +3,9 @@ async function embedChatWidget() {
   // Check if the chat widget is already embedded to avoid re-embedding.
   if (window.chatWidgetAlreadyEmbedded) return;
 
+  const currentScript = document.currentScript;
+  const origin = new URL(currentScript.src).origin;
+  const assistant_id = currentScript.getAttribute("chatbotId");
   const toggleChat = () => {
     const isChatIframeVisible = chatIframe.style.display !== "none";
     chatIframe.style.display = isChatIframeVisible ? "none" : "block";
@@ -29,21 +32,13 @@ async function embedChatWidget() {
 
   // Define default sizes and configurations.
   const buttonSize = 50,
-    halfButtonSize = buttonSize / 2,
     defaultButtonColor = "#000000",
     chatWidgetIframeId = "halbelf-bubble-window",
     closeButtonId = "halbelf-bubble-button";
 
-  // Fetch chatbot ID and other configurations either from URL parameters or global variables.
-  // let chatbotId = currentScript.getAttribute("chatbotId");
-
-  // Construct the chat iframe URL using the chat server base URL and chatbot ID.
-  const chatIframeUrl = ""; //|| `${chatServerBaseUrl}/chatbot-iframe/${chatbotId}`;
-
   // Create and configure the chat button that will open the chat widget.
   const chatButton = document.createElement("button");
-  chatButton.id = closeButtonId; // Set an ID for styling and access.
-  // Set styles for the chat button. These would normally be configured to match the site's theme or provided settings.
+  chatButton.id = closeButtonId;
   chatButton.style.position = "fixed";
   chatButton.style.color = "white";
   chatButton.style.bottom = "20px";
@@ -53,7 +48,7 @@ async function embedChatWidget() {
   chatButton.style.width = `${buttonSize}px`;
   chatButton.style.height = `${buttonSize}px`;
   chatButton.style.padding = `10px`;
-  chatButton.style.borderRadius = `${halfButtonSize}px`;
+  chatButton.style.borderRadius = `999px`;
   chatButton.style.display = "flex";
   chatButton.style.justifyContent = "center";
   chatButton.style.alignItems = "center";
@@ -79,12 +74,9 @@ async function embedChatWidget() {
 
   // Create and configure the chat iframe which will load the chat interface.
   const chatIframe = document.createElement("iframe");
-  chatIframe.src =
-    "https://heatofus.vercel.app/iframe?assistant_id=asst_ZXwICVen8ksFbjxkZcE8i4rA" ||
-    "http://localhost:3000/iframe?assistant_id=asst_ZXwICVen8ksFbjxkZcE8i4rA";
-    
+  chatIframe.src = `${origin}/iframe?assistant_id=${assistant_id}`;
+
   chatIframe.id = chatWidgetIframeId;
-  // Set initial styles for the chat iframe. It starts hidden and will be shown when the chat button is clicked.
   chatIframe.style.display = "none";
   chatIframe.style.backgroundColor = "#fff";
   chatIframe.style.position = "fixed";
@@ -100,15 +92,16 @@ async function embedChatWidget() {
   document.body.appendChild(chatIframe);
 
   chatButton.addEventListener("click", toggleChat);
-
-  chatIframe.addEventListener("load", () => {
-    chatIframe.contentDocument
-      .querySelector("#closeChat")
-      .addEventListener("click", toggleChat);
+  window.addEventListener("message", (e) => {
+    if (e.origin !== origin) {
+      return;
+    }
+    if (e.data.closeIframe) {
+      toggleChat();
+    }
   });
 }
 
-// Execute the embedChatWidget function when the document is ready or once the window is loaded.
 if (document.readyState === "complete") {
   embedChatWidget();
 } else {

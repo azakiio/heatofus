@@ -5,7 +5,6 @@ interface Link {
 }
 
 const links: Link[] = [
-  { label: "Demo", href: "/demo" },
   { label: "Pricing", href: "/pricing" },
 ];
 

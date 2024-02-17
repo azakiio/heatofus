@@ -7,8 +7,15 @@ useSeoMeta({
 
 useHead({
   script: [
+    // {
+    //   src: "/embed.js",
+    //   chatbotId: "lalala",
+    //   defer: true,
+    // },
     {
-      src: "./embed.js",
+      src: "/embed.js",
+      chatbotId: "asst_ZXwICVen8ksFbjxkZcE8i4rA",
+      // domain: "www.chatbase.co",
       defer: true,
     },
   ],

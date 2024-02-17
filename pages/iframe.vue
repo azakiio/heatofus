@@ -48,13 +48,8 @@ const addMessage = async () => {
   checkRunStatus();
 };
 
-const deleteThread = async () => {
-  await $fetch("/api/threads/delete", {
-    query: {
-      thread_id: thread.value?.id,
-    },
-  });
-  navigateTo(`/dashboard/${assistant_id}`);
+const closeChat = async () => {
+  window.parent.postMessage({ closeIframe: true }, "*");
 };
 
 const { data: messages, refresh } = await useLazyAsyncData(
@@ -120,9 +115,9 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
         <div class="i-mdi-refresh"></div>
       </button>
       <button
-        id="closeChat"
         class="p-2 hover:bg-red hover:text-red-1 transition-colors rounded-lg"
-        title="delete conversation"
+        title="Close Chat"
+        @click="closeChat"
       >
         <div class="i-mdi-close"></div>
       </button>
@@ -154,10 +149,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
       </div>
 
       <div v-if="pending" class="grid p-2">
-        <Icon
-          name="eos-icons:three-dots-loading"
-          class="w-10 h-10 c-stone"
-        />
+        <Icon name="eos-icons:three-dots-loading" class="w-10 h-10 c-stone" />
       </div>
     </div>
 
@@ -190,10 +182,3 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
     </form>
   </div>
 </template>
-
-<style scoped>
-.chatBox {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-}
-</style>

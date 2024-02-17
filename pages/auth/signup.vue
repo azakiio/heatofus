@@ -17,9 +17,7 @@ const signUp = async () => {
 </script>
 
 <template>
-  <div
-    class="layout max-w-sm content-center space-y-6"
-  >
+  <div class="layout max-w-sm content-center space-y-6">
     <div class="flex flex-col space-y-2 text-center">
       <h1 class="text-center text-2xl font-semibold tracking-tight">
         Get started for free
@@ -42,7 +40,7 @@ const signUp = async () => {
           aria-describedby=":r8:-form-item-description"
           aria-invalid="false"
           type="email"
-          value=""
+          v-model="email"
           name="email"
         />
       </div>
@@ -62,7 +60,7 @@ const signUp = async () => {
             autocorrect="off"
             autocomplete="new-password"
             type="password"
-            value=""
+            v-model="password"
             name="password"
           /><button
             type="button"
