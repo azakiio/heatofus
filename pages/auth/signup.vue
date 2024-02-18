@@ -2,6 +2,7 @@
 const supabase = useSupabaseClient();
 const email = ref("");
 const password = ref("");
+const errorMessage = ref("");
 
 const signUp = async () => {
   const { error } = await supabase.auth.signUp({
@@ -12,7 +13,8 @@ const signUp = async () => {
   if (!error) {
     navigateTo("/dashboard");
   }
-  if (error) console.log(error);
+  errorMessage.value = error.message;
+  return;
 };
 
 const signUpGoogle = async () => {
@@ -79,6 +81,9 @@ const signUpGoogle = async () => {
           >
             <div class="i-mdi-eye"></div>
           </button>
+        </div>
+        <div class="text-sm text-red-700">
+          {{ errorMessage }}
         </div>
       </div>
       <button class="btn bg-fg c-bg" type="submit">Sign up</button>

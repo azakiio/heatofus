@@ -13,8 +13,6 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const client = serverSupabaseServiceRole<Database>(event);
   const stripe = new Stripe(config.STRIPE_SECRET, { apiVersion: "2023-10-16" });
-
-  console.log('test')
   const sig = event.headers.get("stripe-signature") || "";
   let receivedEvent: Stripe.Event;
 
@@ -29,7 +27,7 @@ export default defineEventHandler(async (event) => {
 
     if (receivedEvent.type === "customer.created") {
       console.log(receivedEvent.data.object);
-      const { id, name, email, created } = receivedEvent.data
+      const { id, name, email } = receivedEvent.data
         .object as Stripe.Customer;
 
       const { data, error } = await client
@@ -37,7 +35,6 @@ export default defineEventHandler(async (event) => {
         .update({
           stripe_id: id,
           name,
-          created: getSBTS(created),
         })
         .eq("email", email || "");
 

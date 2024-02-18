@@ -2,9 +2,10 @@
 const supabase = useSupabaseClient();
 const email = ref("");
 const password = ref("");
+const errorMessage = ref("");
 
 const Login = async () => {
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value,
   });
@@ -12,7 +13,9 @@ const Login = async () => {
   if (!error) {
     navigateTo("/dashboard");
   }
-  if (error) console.log(error);
+
+  errorMessage.value = error.message;
+  return;
 };
 
 const signUpGoogle = async () => {
@@ -69,16 +72,11 @@ const signUpGoogle = async () => {
             type="password"
             name="password"
             v-model="password"
-          /><button
-            type="button"
-            aria-pressed="false"
-            data-state="off"
-            class="justify-center ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300 dark:data-[state=on]:bg-zinc-800 dark:data-[state=on]:text-zinc-50 hover:bg-transparent text-zinc-500 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 data-[state=on]:bg-transparent data-[state=on]:text-zinc-700 px-3 absolute right-0 flex h-full items-center rounded-md bg-transparent text-base font-medium"
-            aria-label="Show password"
-          >
-            <div class="i-mdi-eye"></div>
-          </button>
+          />
         </div>
+      </div>
+      <div class="text-sm text-red-700">
+        {{ errorMessage }}
       </div>
       <a class="place-self-end link" type="button" href="/auth/password-reset"
         >Forgot password?</a
