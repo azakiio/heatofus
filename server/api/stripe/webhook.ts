@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
   const client = serverSupabaseServiceRole<Database>(event);
   const stripe = new Stripe(config.STRIPE_SECRET, { apiVersion: "2023-10-16" });
 
+  console.log('test')
   const sig = event.headers.get("stripe-signature") || "";
   let receivedEvent: Stripe.Event;
 
