@@ -142,6 +142,7 @@ export type Database = {
           plan: Json | null
           status: string | null
           stripe_id: string | null
+          token_usage: number | null
           updated_at: string | null
         }
         Insert: {
@@ -156,6 +157,7 @@ export type Database = {
           plan?: Json | null
           status?: string | null
           stripe_id?: string | null
+          token_usage?: number | null
           updated_at?: string | null
         }
         Update: {
@@ -170,6 +172,7 @@ export type Database = {
           plan?: Json | null
           status?: string | null
           stripe_id?: string | null
+          token_usage?: number | null
           updated_at?: string | null
         }
         Relationships: [
@@ -336,6 +339,13 @@ export type Database = {
       }
     }
     Functions: {
+      increment_usage: {
+        Args: {
+          x: number
+          assistant: string
+        }
+        Returns: undefined
+      }
       ivfflathandler: {
         Args: {
           "": unknown

@@ -6,6 +6,7 @@ export default defineEventHandler(async (event) => {
   const openai = new OpenAI();
   const body = await readBody(event);
 
+  // TODO: Check if assistant count is below max
   const assistant = await openai.beta.assistants.create({
     name: body?.name || "Customer Support Bot",
     instructions:

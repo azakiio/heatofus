@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
   const file = formData.get("file") as File;
   const assistant_id = formData.get("assistant_id")?.toString();
 
+  // check that file is below users limit
   const fileUpload = await openai.files.create({
     file: file,
     purpose: "assistants",

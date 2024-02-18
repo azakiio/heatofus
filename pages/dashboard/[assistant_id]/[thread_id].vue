@@ -64,6 +64,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
     pending.value = true;
     const { runStepData } = await $fetch("/api/assistant/checkrun", {
       query: {
+        assistant_id: assistant_id,
         thread_id: thread_id,
         run_id: runId.value,
       },
