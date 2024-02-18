@@ -4,9 +4,7 @@ interface Link {
   href: string;
 }
 
-const links: Link[] = [
-  { label: "Pricing", href: "/pricing" },
-];
+const links: Link[] = [{ label: "Pricing", href: "/pricing" }];
 
 const user = useSupabaseUser();
 
@@ -41,6 +39,7 @@ onMounted(() => {
       </nav>
       <div v-if="user?.id" class="flex gap-4 items-center justify-self-end">
         <NuxtLink
+          key="dashboard"
           to="/dashboard"
           class="btn p-2 rounded-full bg-transparent border"
           active-class="c-green"
@@ -48,6 +47,7 @@ onMounted(() => {
           <Icon name="ic:round-dashboard" class="h-6 w-6"
         /></NuxtLink>
         <NuxtLink
+          key="profile"
           class="btn p-2 rounded-full bg-transparent border"
           to="/profile"
           active-class="c-green"
@@ -55,8 +55,11 @@ onMounted(() => {
         /></NuxtLink>
       </div>
       <div v-else class="flex gap-4 items-center justify-self-end">
-        <NuxtLink to="/auth/login" class="link">Log in</NuxtLink>
-        <NuxtLink to="/auth/signup" class="btn bg-fg c-bg px-2 py-1"
+        <NuxtLink key="login" to="/auth/login" class="link">Log in</NuxtLink>
+        <NuxtLink
+          key="signup"
+          to="/auth/signup"
+          class="btn bg-fg c-bg px-2 py-1"
           >Try for Free</NuxtLink
         >
       </div>

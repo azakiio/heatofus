@@ -129,6 +129,59 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          cancel_at: string | null
+          canceled_at: string | null
+          created_at: string
+          current_period_end: string | null
+          current_period_start: string | null
+          email: string | null
+          id: string
+          name: string | null
+          plan: Json | null
+          status: string | null
+          stripe_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          cancel_at?: string | null
+          canceled_at?: string | null
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          email?: string | null
+          id: string
+          name?: string | null
+          plan?: Json | null
+          status?: string | null
+          stripe_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          cancel_at?: string | null
+          canceled_at?: string | null
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          email?: string | null
+          id?: string
+          name?: string | null
+          plan?: Json | null
+          status?: string | null
+          stripe_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       stripe_users: {
         Row: {
           cancel_at: string | null

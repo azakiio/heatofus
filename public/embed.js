@@ -74,7 +74,16 @@ async function embedChatWidget() {
 
   // Create and configure the chat iframe which will load the chat interface.
   const chatIframe = document.createElement("iframe");
-  chatIframe.src = `${origin}/iframe?assistant_id=${assistant_id}`;
+  const thread_id = sessionStorage.getItem("thread_id");
+
+  chatIframe.src = `${origin}/iframe`;
+
+  if (assistant_id) {
+    chatIframe.src += `?assistant_id=${assistant_id}`;
+  }
+  if (thread_id) {
+    chatIframe.src += `&thread_id=${thread_id}`;
+  }
 
   chatIframe.id = chatWidgetIframeId;
   chatIframe.style.display = "none";
@@ -98,6 +107,10 @@ async function embedChatWidget() {
     }
     if (e.data.closeIframe) {
       toggleChat();
+    }
+    if (e.data.thread_id) {
+      console.log(e.data);
+      sessionStorage.setItem("thread_id", e.data.thread_id);
     }
   });
 }

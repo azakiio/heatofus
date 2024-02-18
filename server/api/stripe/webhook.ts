@@ -1,6 +1,4 @@
-import {
-  serverSupabaseServiceRole
-} from "#supabase/server";
+import { serverSupabaseServiceRole } from "#supabase/server";
 import Stripe from "stripe";
 import { Database } from "~/types/supabase";
 
@@ -33,12 +31,15 @@ export default defineEventHandler(async (event) => {
       const { id, name, email, created } = receivedEvent.data
         .object as Stripe.Customer;
 
-      const { data, error } = await client.from("stripe_users").insert({
-        id,
-        name,
-        email,
-        created: new Date(created * 1000).toISOString(),
-      });
+      const { data, error } = await client
+        .from("profiles")
+        .update({
+          stripe_id: id,
+          name,
+          created: getSBTS(created),
+        })
+        .eq("email", email || "");
+
       console.log(data);
       console.error(error);
     }
@@ -58,10 +59,10 @@ export default defineEventHandler(async (event) => {
         canceled_at,
         current_period_start,
         current_period_end,
-      } = receivedEvent.data.object as Stripe.Subscription;
-      
+      } = receivedEvent.data.object as Stripe.Subscription & { plan: any };
+
       const { data, error } = await client
-        .from("stripe_users")
+        .from("profiles")
         .update({
           status,
           plan,
@@ -71,7 +72,7 @@ export default defineEventHandler(async (event) => {
           current_period_start: getSBTS(current_period_start),
           current_period_end: getSBTS(current_period_end),
         })
-        .eq("id", customer);
+        .eq("stripe_id", customer);
 
       console.log(data);
       console.error(error);

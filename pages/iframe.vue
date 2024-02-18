@@ -1,17 +1,24 @@
 <script setup lang="ts">
-import { marked } from "marked";
+// import { marked } from "marked";
 definePageMeta({
   layout: "embed",
 });
 
-const { assistant_id } = useRoute().query;
+const { assistant_id, thread_id } = useRoute().query;
 
+const threadRef = ref(thread_id);
 const suggestions = [
   "What is Halbelf?",
   "How do I add data to my chatbot?",
   "Is there a free plan?",
   "What are some use cases?",
 ];
+
+onMounted(() => {
+  if (!thread_id) {
+    refreshThread();
+  }
+});
 
 const chatBox = ref<HTMLDivElement>();
 
@@ -26,23 +33,27 @@ const initialMessages = [
 
 const { data: thread, refresh: refreshThread } = await useAsyncData(
   async () => {
-    const thread_id = await $fetch("/api/threads/create", {
+    const thread = await $fetch("/api/threads/create", {
       query: { assistant_id },
     });
-    return thread_id;
-  }
+    window.parent.postMessage({ thread_id: thread.id }, "*");
+    threadRef.value = thread.id;
+    return thread;
+  },
+  { immediate: false }
 );
 
 const addMessage = async () => {
-  runId.value = await $fetch("/api/threads/chat", {
+  const runPromise = $fetch("/api/threads/chat", {
     method: "post",
     body: {
-      thread_id: thread.value?.id,
+      thread_id: threadRef.value,
       assistant_id,
       message: message.value,
     },
   });
   message.value = "";
+  runId.value = await runPromise;
 
   refresh();
   checkRunStatus();
@@ -56,7 +67,7 @@ const { data: messages, refresh } = await useLazyAsyncData(
   "messages",
   async () => {
     const data = await $fetch("/api/threads/messages", {
-      query: { thread_id: thread.value?.id },
+      query: { thread_id: threadRef.value },
     });
     return data;
   }
@@ -78,7 +89,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
     pending.value = true;
     const { runStepData } = await $fetch("/api/assistant/checkrun", {
       query: {
-        thread_id: thread.value?.id,
+        thread_id: threadRef.value || thread.value?.id,
         run_id: runId.value,
       },
     });
@@ -124,14 +135,14 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
     </div>
 
     <div
-      class="grid w-full content-start overflow-auto rounded-lg gap-4"
+      class="grid w-full content-start overflow-auto rounded-lg gap-4 py-4"
       ref="chatBox"
     >
       <div class="grid gap-2 px-2" v-for="item in initialMessages">
         <!-- <Icon name="i-mdi-assistant" class="w-8 h-8" /> -->
         <div
           class="bg-stone-200 p-2 rounded-lg w-fit mr-8 justify-self-start shadow-lg"
-          v-html="marked.parse(item)"
+          v-html="item"
         />
       </div>
       <div
@@ -144,7 +155,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
             'mr-8 justify-self-start bg-stone-200': role === 'assistant',
             'ml-8 justify-self-end bg-green-500 c-white': role === 'user',
           }"
-          v-html="marked.parse(content)"
+          v-html="content"
         />
       </div>
 
