@@ -55,7 +55,7 @@ const addMessage = async () => {
   message.value = "";
   runId.value = await runPromise;
 
-  refresh();
+  await refresh();
   checkRunStatus();
 };
 
