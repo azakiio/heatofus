@@ -14,6 +14,14 @@ const signUp = async () => {
   }
   if (error) console.log(error);
 };
+
+const signUpGoogle = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+  });
+
+  console.log(data, error);
+};
 </script>
 
 <template>
@@ -90,7 +98,7 @@ const signUp = async () => {
         >
       </div>
     </div>
-    <button class="btn bg-fg c-bg">
+    <button class="btn bg-fg c-bg" @click="signUpGoogle">
       <div class="i-logos-google-icon"></div>
       Google
     </button>
