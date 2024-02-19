@@ -1,4 +1,7 @@
-import { serverSupabaseClient, serverSupabaseServiceRole } from "#supabase/server";
+import {
+  serverSupabaseClient,
+  serverSupabaseServiceRole,
+} from "#supabase/server";
 import OpenAI from "openai";
 import { Database } from "~/types/supabase";
 
