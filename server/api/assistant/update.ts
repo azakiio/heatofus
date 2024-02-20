@@ -9,11 +9,17 @@ export default defineEventHandler(async (event) => {
   const name = formData.get("name") as string;
   const instructions = formData.get("instructions") as string;
   const model = formData.get("model") as string;
+  const initialMessages = formData.get("initialMessages") as string;
+  const suggestions = formData.get("suggestions") as string;
 
   const assistant = await openai.beta.assistants.update(assistant_id, {
     name: name,
     instructions: instructions,
     model: model,
+    metadata: {
+      initialMessages: initialMessages,
+      suggestions: suggestions,
+    },
   });
 
   console.log(assistant);

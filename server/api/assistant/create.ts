@@ -15,6 +15,10 @@ export default defineEventHandler(async (event) => {
     model: body?.model || "gpt-4-turbo-preview",
     tools: [{ type: "retrieval" }],
     file_ids: body?.file_ids,
+    metadata: {
+      initialMessages: body?.initialMessages,
+      suggestions: body?.suggestions,
+    },
   });
 
   const client = await serverSupabaseClient<Database>(event);

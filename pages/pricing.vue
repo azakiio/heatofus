@@ -1,8 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { plans } from "~/content/plans";
 const user = useSupabaseUser();
 const plansList = Object.values(plans);
 const yearly = ref(false);
+const getPaymentLink = (plan: any) => {
+  if (user.value?.email) {
+    return yearly
+      ? `${plan.monthUrl}?prefilled_email=${user.value?.email}`
+      : `${plan.yearUrl}?prefilled_email=${user.value?.email}`;
+  } else {
+    return "/auth/signup";
+  }
+};
 </script>
 
 <template>
@@ -58,14 +67,7 @@ const yearly = ref(false);
               yearly ? "year" : "month"
             }}</span>
           </div>
-          <NuxtLink
-            :to="
-              yearly
-                ? `${plan.yearUrl}?prefilled_email=${user?.email}`
-                : `${plan.monthUrl}?prefilled_email=${user?.email}`
-            "
-            class="btn bg-dark c-light"
-          >
+          <NuxtLink :to="getPaymentLink(plan)" class="btn bg-dark c-light">
             {{ plan?.cta || "Subscribe" }}
           </NuxtLink>
         </div>

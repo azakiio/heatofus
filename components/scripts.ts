@@ -7,15 +7,9 @@ style="height: 100%; min-height: 700px"
 frameborder="0"
 ></iframe>`;
 
-export const bubbleScript = stripIndent`<script>
-window.embeddedChatbotConfig = {
-chatbotId: "-LRpjtnLquTxYMRQyAUxm",
-domain: "www.halbelf.com"
-}
-</script>
+export const bubbleScript = (assistant_id: string) => stripIndent`
 <script
-src="https://www.halbelf.com/embed.min.js"
-chatbotId="-LRpjtnLquTxYMRQyAUxm"
-domain="www.halbelf.com"
+src="https://www.halbelf.com/embed.js"
+chatbotId="${assistant_id}"
 defer>
 </script>`;

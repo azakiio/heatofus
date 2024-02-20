@@ -7,15 +7,9 @@ useSeoMeta({
 
 useHead({
   script: [
-    // {
-    //   src: "/embed.js",
-    //   chatbotId: "lalala",
-    //   defer: true,
-    // },
     {
       src: "/embed.js",
-      chatbotId: "asst_ZXwICVen8ksFbjxkZcE8i4rA",
-      // domain: "www.chatbase.co",
+      chatbotId: "asst_AUtf2nABXi5Eqluniw9CAEiG",
       defer: true,
     },
   ],
@@ -26,6 +20,7 @@ useHead({
   <div class="wrapper">
     <Navbar />
     <NuxtPage />
+    <CookieConsent />
   </div>
 </template>
 

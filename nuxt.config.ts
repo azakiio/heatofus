@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@unocss/nuxt", "@nuxtjs/supabase", "nuxt-icon"],
+  modules: ["@unocss/nuxt", "@nuxtjs/supabase", "nuxt-icon", "@nuxt/content"],
   routeRules: {
     "/api/consent": {
       cors: true,

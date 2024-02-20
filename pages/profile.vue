@@ -10,7 +10,7 @@ const user = useSupabaseUser();
 const { data } = await client
   .from("profiles")
   .select(
-    "id, name, email, status, plan->product, cancel_at, current_period_start, current_period_end"
+    "id, name, email, status, plan->product, cancel_at, current_period_start, current_period_end, token_usage"
   )
   .eq("id", user.value?.id || "");
 
@@ -43,7 +43,7 @@ const profile = ref(data?.at(0));
           Subscription will be cancelled on:
           {{ new Date(profile?.cancel_at).toLocaleDateString() }}
         </div>
-        <div v-else-if="profile?.status">
+        <div v-else-if="profile?.current_period_end">
           Subscription Renewing on:
           {{ new Date(profile?.current_period_end).toLocaleDateString() }}
         </div>
@@ -67,7 +67,7 @@ const profile = ref(data?.at(0));
     <div class="border-2 rounded-lg">
       <div class="p-4 text-3xl font-medium">Usage</div>
       <div class="p-4">
-        <div>Messages consumed: 0/20</div>
+        <div>Messages consumed: {{ profile?.token_usage }}</div>
         <div>
           Your credits renew at the start of every calendar month. Next renewal:
           March 1st

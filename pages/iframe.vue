@@ -7,12 +7,6 @@ definePageMeta({
 const { assistant_id, thread_id } = useRoute().query;
 
 const threadRef = ref(thread_id);
-const suggestions = [
-  "What is Halbelf?",
-  "How do I add data to my chatbot?",
-  "Is there a free plan?",
-  "What are some use cases?",
-];
 
 onMounted(() => {
   if (!thread_id) {
@@ -26,11 +20,6 @@ const message = ref("");
 const runId = ref("");
 const pending = ref(false);
 
-const initialMessages = [
-  "👋 Hi! I am elfAI, ask me anything about Halbelf!",
-  "By the way, you can create a chatbot like me for your website! 😮",
-];
-
 const { data: thread, refresh: refreshThread } = await useAsyncData(
   async () => {
     const thread = await $fetch("/api/threads/create", {
@@ -42,6 +31,13 @@ const { data: thread, refresh: refreshThread } = await useAsyncData(
   },
   { immediate: false }
 );
+
+const { data: assistant } = await useAsyncData(async () => {
+  const assistant = await $fetch("/api/assistant/get", {
+    query: { assistant_id },
+  });
+  return assistant;
+});
 
 const addMessage = async () => {
   const runPromise = $fetch("/api/threads/chat", {
@@ -139,7 +135,13 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
       class="grid w-full content-start overflow-auto rounded-lg gap-4 py-4"
       ref="chatBox"
     >
-      <div class="grid gap-2 px-2" v-for="item in initialMessages">
+      <div
+        class="grid gap-2 px-2"
+        v-for="item in assistant?.initialMessages
+          .replace(/\r\n/g, '\n')
+          .split('\n')
+          .filter((line) => line)"
+      >
         <!-- <Icon name="i-mdi-assistant" class="w-8 h-8" /> -->
         <div
           class="bg-stone-200 p-2 rounded-lg w-fit mr-8 justify-self-start shadow-lg"
@@ -173,7 +175,10 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
             addMessage();
           }
         "
-        v-for="item in suggestions"
+        v-for="item in assistant?.suggestions
+          .replace(/\r\n/g, '\n')
+          .split('\n')
+          .filter((line) => line)"
         class="p-1 border rounded bg-stone-200 shadow"
       >
         {{ item }}

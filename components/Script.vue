@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { iframeScript, bubbleScript } from "./scripts";
+import { bubbleScript } from "./scripts";
+const { assistant_id } = useRoute().params;
 </script>
 
 <template>
@@ -39,7 +40,7 @@ import { iframeScript, bubbleScript } from "./scripts";
         <code
           class="w-full overflow-auto rounded bg-zinc-100 p-2 text-xs whitespace-pre-line"
         >
-          {{ bubbleScript }}
+          {{ bubbleScript(assistant_id as string) }}
         </code>
 
         <button class="btn bg-white border self-center hover:bg-light mt-a">

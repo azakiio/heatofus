@@ -29,9 +29,10 @@ onMounted(() => {
     <div
       class="grid grid-flow-col auto-cols-fr p-2 items-center max-w-5xl mx-a h-full"
     >
-      <NuxtLink to="/" class="c-green font-bold text-xl justify-self-start"
-        >Halbelf</NuxtLink
-      >
+      <NuxtLink to="/" class="flex justify-self-start items-center gap-2">
+        <Logo />
+        <div class="c-green font-bold text-xl">Halbelf</div>
+      </NuxtLink>
       <nav class="justify-self-center flex gap-4">
         <NuxtLink :to="link.href" v-for="link in links" class="link">{{
           link.label

@@ -5,6 +5,7 @@ const { data: assistant } = await useFetch("/api/assistant/get", {
 });
 
 const models = ["gpt-4-turbo-preview", "gpt-3.5-turbo-1106"];
+const pending = ref(false);
 
 const placeholder =
   "You are a customer support chatbot. Use your knowledge base to best respond to customer queries.";
@@ -12,12 +13,14 @@ const placeholder =
 const submit = async (e: Event) => {
   const formData = new FormData(e.currentTarget);
   formData.append("assistant_id", assistant_id as string);
+
+  pending.value = true;
   const data = await $fetch("/api/assistant/update", {
     method: "post",
     body: formData,
   });
-
   console.log(data);
+  pending.value = false;
 };
 </script>
 
@@ -51,13 +54,42 @@ const submit = async (e: Event) => {
 
       <div class="w-full">
         <div class="font-medium">Model</div>
-        <select name="model" :value="assistant?.model" class="p-2 border-2 rounded-lg">
+        <select
+          name="model"
+          :value="assistant?.model"
+          class="p-2 border-2 rounded-lg"
+        >
           <option v-for="option in models" :value="option">
             {{ option }}
           </option>
         </select>
       </div>
-      <button class="btn variant-blue absolute right-0 bottom-4">save</button>
+
+      <div class="w-full">
+        <div class="font-medium">Initial Messages</div>
+        <textarea
+          :value="(assistant?.metadata as any).initialMessages"
+          name="initialMessages"
+          rows="4"
+          :placeholder="placeholder"
+          class="input"
+        />
+      </div>
+
+      <div class="w-full">
+        <div class="font-medium">Suggestions</div>
+        <textarea
+          :value="(assistant?.metadata as any).suggestions"
+          name="suggestions"
+          rows="4"
+          :placeholder="placeholder"
+          class="input"
+        />
+      </div>
+      <button class="btn variant-blue" :disabled="pending">
+        <div v-if="pending" class="i-eos-icons:three-dots-loading w-8 h-8"></div>
+        <div v-else>save</div>
+      </button>
     </form>
   </section>
 </template>
