@@ -13,6 +13,7 @@
   "devDependencies": {
     "@nuxtjs/supabase": "^1.1.5",
     "nuxt": "^3.9.3",
+    "nuxt-svgo": "^4.0.0",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5"
   },

@@ -18,6 +18,11 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
 }
 
 .overflow-ellipsis {
@@ -41,7 +46,7 @@ html {
 }
 
 .link:hover {
-  @apply color-primary;
+  /* @apply color-primary; */
 }
 
 .link:hover::after {

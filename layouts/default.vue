@@ -20,7 +20,9 @@ useHead({
   <div class="wrapper">
     <Navbar />
     <NuxtPage />
+    <Footer />
     <CookieConsent />
+    <CookieDialog />
   </div>
 </template>
 

@@ -121,9 +121,8 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
           <div class="prose" v-html="marked.parse(item.content)" />
         </div>
 
-        <div v-if="pending" class="grid grid-cols-[2rem_auto] gap-4 p-2">
-          <Icon name="i-mdi-assistant" class="w-10 h-10" />
-          <Icon name="line-md:loading-alt-loop" class="w-10 h-10" />
+        <div v-if="pending" class="grid p-2">
+          <Icon name="eos-icons:three-dots-loading" class="w-10 h-10" />
         </div>
       </div>
 

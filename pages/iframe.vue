@@ -142,7 +142,6 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
           .split('\n')
           .filter((line) => line)"
       >
-        <!-- <Icon name="i-mdi-assistant" class="w-8 h-8" /> -->
         <div
           class="bg-stone-200 p-2 rounded-lg w-fit mr-8 justify-self-start shadow-lg"
           v-html="item"
@@ -153,12 +152,12 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
         v-for="{ role, content } in messages"
       >
         <div
-          class="p-2 rounded-lg w-fit shadow-lg"
+          class="p-2 rounded-lg w-fit shadow-lg prose"
           :class="{
             'mr-8 justify-self-start bg-stone-200': role === 'assistant',
             'ml-8 justify-self-end bg-green-500 c-white': role === 'user',
           }"
-          v-html="content"
+          v-html="marked.parse(content)"
         />
       </div>
 

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const consent = useCookie("consent", { default: () => "unset" });
+const openModal = () => {
+  document.querySelector("dialog")?.showModal();
+};
 </script>
 
 <template>
@@ -21,10 +24,7 @@ const consent = useCookie("consent", { default: () => "unset" });
         ><button
           class="btn border bg-transparent h-7 rounded-md px-3"
           type="button"
-          aria-haspopup="dialog"
-          aria-expanded="false"
-          aria-controls="radix-:r3:"
-          data-state="closed"
+          @click="openModal"
         >
           Details
         </button>
