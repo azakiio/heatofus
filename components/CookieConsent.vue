@@ -30,8 +30,7 @@ const openModal = () => {
         </button>
       </div>
       <button
-        class="btn bg-zinc-900 text-zinc-50 h-7 rounded-md px-3 w-32"
-        type="button"
+        class="btn text-zinc-50 bg-zinc-900 h-7 rounded-md px-3 w-32"
         @click="consent = 'accept'"
       >
         Accept

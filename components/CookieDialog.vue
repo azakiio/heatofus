@@ -14,9 +14,23 @@ const dialog = ref();
       We use cookies to improve your site experience. The "strictly necessary"
       cookies are required for Chatbase to function.
     </p>
-    <div class="border rounded">
-      <div>Strictly Necessary cookies</div>
-      <div>Analytics cookeis</div>
+    <div class="rounded-lg">
+      <button
+        class="flex gap-2 items-center p-2 font-bold border w-full rounded-lg"
+      >
+        <Icon
+          name="mdi:check"
+          class="bg-green-600 c-white rounded-md w-5 h-5 p-0.5"
+        />Strictly Necessary cookies
+      </button>
+      <button
+        class="flex gap-2 items-center p-2 font-bold border w-full rounded-lg"
+      >
+        <Icon
+          name="mdi:check"
+          class="bg-green-600 c-white rounded-md w-5 h-5 p-0.5"
+        />Analytics cookies
+      </button>
     </div>
   </dialog>
 </template>
