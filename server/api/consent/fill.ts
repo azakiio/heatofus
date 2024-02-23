@@ -63,10 +63,15 @@ export default defineEventHandler(async (event) => {
         from: "service@elearning.bayer.de",
         to: `${emailField}, einwilligung@jupdialog.de`,
         subject: `Consent Formular - ${vornameField} ${nameField}`,
-        text: stripIndents`Herzlichen Dank für Ihre Einwilligung.
-        Im Anhang haben wir für Sie das Dokument für Ihre Unterlagen beigefügt.
-         
-        Beste Grüße, Ihr Bayer Service-Team`,
+        text: stripIndents`Herzlichen Dank, dass Sie uns einen Consent für die digitale Kommunikation mit Ihnen erteilt haben.
+
+        Im Anhang haben wir das Dokument für Ihre Unterlagen beigefügt.
+        
+        Mit freundlichen Grüßen
+        
+        
+        Ihr Bayer Vital Kundenservice
+        `,
         attachments: [
           {
             filename: "Consent Formular.pdf",
