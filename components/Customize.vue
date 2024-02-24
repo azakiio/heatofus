@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { assistant_id } = useRoute().params;
-const { data: assistant } = await useFetch("/api/assistant/get", {
+const { data: assistant, refresh } = await useFetch("/api/assistant/get", {
   query: { assistant_id },
 });
 
@@ -20,6 +20,7 @@ const submit = async (e: Event) => {
     body: formData,
   });
   console.log(data);
+  refresh();
   pending.value = false;
 };
 </script>
@@ -87,7 +88,10 @@ const submit = async (e: Event) => {
         />
       </div>
       <button class="btn variant-blue" :disabled="pending">
-        <div v-if="pending" class="i-eos-icons:three-dots-loading w-8 h-8"></div>
+        <div
+          v-if="pending"
+          class="i-eos-icons:three-dots-loading w-8 h-8"
+        ></div>
         <div v-else>save</div>
       </button>
     </form>

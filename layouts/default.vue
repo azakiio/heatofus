@@ -28,6 +28,7 @@ useHead({
 
 <style>
 .wrapper {
+  @apply bg-bg text-fg;
   display: grid;
   grid-template-rows: 4rem minmax(calc(100vh - 4rem), 1fr);
   font-family: Satoshi;

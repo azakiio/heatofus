@@ -3,7 +3,7 @@
     <svg
       width="100%"
       height="100%"
-      viewBox="0 0 416 416"
+      viewBox="0 0 450 450"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       class="w-10 h-10"
@@ -14,14 +14,14 @@
         stroke-width="15"
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-dasharray="2000"
-        stroke-dashoffset="2000"
+        stroke-dasharray="3000"
+        stroke-dashoffset="3000"
       >
         <animate
           fill="freeze"
           attributeName="stroke-dashoffset"
           dur="3s"
-          values="2000;0"
+          values="3000;0"
         />
       </path>
     </svg>

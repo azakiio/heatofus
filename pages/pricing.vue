@@ -26,14 +26,14 @@ const getPaymentLink = (plan: any) => {
       <div class="flex gap-4 p-4">
         <button
           class="btn"
-          :class="{ 'variant-blue': yearly === false }"
+          :class="{ 'bg-primary': yearly === false }"
           @click="yearly = false"
         >
           Monthly billing
         </button>
         <button
           class="btn"
-          :class="{ 'variant-blue': yearly }"
+          :class="{ 'bg-primary': yearly }"
           @click="yearly = true"
         >
           Yearly billing
@@ -52,8 +52,8 @@ const getPaymentLink = (plan: any) => {
             v-for="feature in plan.features"
           >
             <Icon
-              name="heroicons:check"
-              class="c-green-600 w-5 h-5 flex-shrink-0"
+              name="mdi:check"
+              class="c-primary w-5 h-5 flex-shrink-0"
             ></Icon>
             <div>{{ feature }}</div>
           </div>

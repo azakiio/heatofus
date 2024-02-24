@@ -3,9 +3,9 @@ export default defineNuxtConfig({
   modules: [
     "@unocss/nuxt",
     "@nuxtjs/supabase",
-    "nuxt-icon",
     "@nuxt/content",
     "nuxt-svgo",
+    "nuxt-icon",
   ],
   routeRules: {
     "/api/consent": {
@@ -20,4 +20,5 @@ export default defineNuxtConfig({
     STRIPE_SECRET: process.env.STRIPE_SECRET,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
   },
+  devtools: { enabled: true },
 });

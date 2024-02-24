@@ -1,6 +1,6 @@
 <script setup>
 import "@unocss/reset/tailwind.css";
-import "~/assets/css/styles.css";
+import "~/assets/css/tailwind.css";
 
 useSeoMeta({
   title: "Halbelf | Custom ChatGPT for your data",

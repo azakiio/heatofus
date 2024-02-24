@@ -21,17 +21,17 @@ onMounted(() => {
 
 <template>
   <header
-    class="sticky top-0 border-b-2 border-transparent transition-all duration-500 bg-white z-10"
+    class="sticky top-0 border-b-2 border-transparent transition-all duration-500 bg-bg z-10"
     :class="{
-      'border-b-green shadow-lg': scrolledPast,
+      'border-b-primary shadow-lg': scrolledPast,
     }"
   >
     <div
-      class="grid grid-flow-col auto-cols-fr p-2 items-center max-w-5xl mx-a h-full"
+      class="grid grid-flow-col auto-cols-fr p-2 items-center max-w-5xl mx-auto h-full"
     >
       <NuxtLink
         to="/"
-        class="flex justify-self-start items-center gap-2 c-green"
+        class="flex justify-self-start items-center gap-2 c-primary"
       >
         <Logo />
         <div class="font-bold text-xl">Halbelf</div>
@@ -48,15 +48,16 @@ onMounted(() => {
         <template v-if="user?.id" :key="user?.id">
           <NuxtLink
             to="/dashboard"
-            class="btn p-2 rounded-full bg-transparent border"
-            active-class="c-green"
+            class="btn-circle shadow-none"
+            active-class="c-primary"
           >
-            <Icon name="ic:round-dashboard" class="h-6 w-6"
-          /></NuxtLink>
+            <Icon name="ic:round-dashboard" class="h-6 w-6" />
+          </NuxtLink>
+
           <NuxtLink
-            class="btn p-2 rounded-full bg-transparent border"
+            class="btn-circle shadow-none"
             to="/profile"
-            active-class="c-green"
+            active-class="c-primary"
             ><Icon name="mdi:account-circle" class="h-6 w-6" /></NuxtLink
         ></template>
         <template v-else>

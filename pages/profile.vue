@@ -33,11 +33,11 @@ const profile = ref(data?.at(0));
           class="flex items-center gap-1"
           v-for="feature in plans[profile?.product || 'free']?.features"
         >
-          <Icon name="heroicons:check" class="c-green-600 w-6 h-6"></Icon>
+          <Icon name="mdi:check" class="c-primary w-6 h-6"></Icon>
           <div>{{ feature }}</div>
         </div>
       </div>
-      <div class="bg-stone-200 p-4">
+      <div class="bg-primary/10 p-4">
         <div>Status: {{ profile?.status || "No Subscription" }}</div>
         <div v-if="profile?.cancel_at">
           Subscription will be cancelled on:
@@ -49,14 +49,14 @@ const profile = ref(data?.at(0));
         </div>
         <NuxtLink
           :to="`https://billing.stripe.com/p/login/test_3csbJNcis5gyeC46oo?prefilled_email=${profile?.email}`"
-          class="btn bg-dark c-light w-fit ml-auto"
+          class="btn bg-fg text-bg w-fit ml-auto"
           v-if="profile?.status === 'active'"
         >
           Manage Subscription
         </NuxtLink>
         <NuxtLink
           :to="`/pricing`"
-          class="btn bg-dark c-light w-fit ml-auto"
+          class="btn bg-fg text-bg w-fit ml-auto"
           v-else
         >
           Subscribe!
@@ -83,7 +83,7 @@ const profile = ref(data?.at(0));
     </div>
 
     <button
-      class="btn mt-a self-center"
+      class="btn mt-a self-center bg-primary"
       @click="
         async () => {
           await client.auth.signOut();

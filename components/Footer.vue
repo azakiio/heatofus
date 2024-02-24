@@ -15,8 +15,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-green z-10 shadow-inner">
-    <div class="grid grid-flow-col auto-cols-fr max-w-5xl mx-a p-8">
+  <div class="bg-primary z-10 shadow-inner">
+    <div class="grid grid-flow-col auto-cols-fr max-w-5xl mx-auto p-8">
       <div class="flex flex-col gap-8 justify-self-start">
         <NuxtLink to="/" class="flex justify-self-start items-center gap-1">
           <Logo />
@@ -31,28 +31,19 @@ onMounted(() => {
         </div>
       </div>
       <div class="flex gap-4 justify-self-end h-fit">
-        <NuxtLink
-          to="/"
-          class="btn rounded-full p-2 bg-transparent shadow-none drop-shadow-lg"
-        >
+        <NuxtLink to="/" class="btn-circle bg-transparent shadow-none">
           <Icon name="mdi:instagram" class="w-8 h-8" />
         </NuxtLink>
-        <NuxtLink
-          to="/"
-          class="btn rounded-full p-2 bg-transparent shadow-none drop-shadow-lg"
-        >
+        <NuxtLink to="/" class="btn-circle bg-transparent shadow-none">
           <Icon name="mdi:linkedin" class="w-8 h-8" />
         </NuxtLink>
-        <NuxtLink
-          to="/"
-          class="btn rounded-full p-2 bg-transparent shadow-none drop-shadow-lg"
-        >
+        <NuxtLink to="/" class="btn-circle bg-transparent shadow-none">
           <Icon name="mdi:twitter" class="w-8 h-8" />
         </NuxtLink>
       </div>
     </div>
-    <div class="flex p-8 max-w-5xl mx-a items-center gap-4">
-      <button class="btn">Contact Support</button>
+    <div class="flex p-8 max-w-5xl mx-auto items-center gap-4">
+      <button class="btn bg-fg text-bg">Contact Support</button>
       <NuxtLink class="link" to="mailto:support@halbelf.com"
         >support@halbelf.com</NuxtLink
       >

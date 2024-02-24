@@ -19,12 +19,17 @@ const steps = [
           Build a custom GPT, embed it on your website and let it handle
           customer support, lead generation, engage with your users, and more.
         </p>
-        <NuxtLink class="btn variant-green w-fit" to="/auth/signup" size="xl"
+        <NuxtLink
+          class="btn bg-primary text-white w-fit"
+          to="/auth/signup"
+          size="xl"
           >Try Now!</NuxtLink
         >
       </div>
       <div>
-        <div class="mb-4 font-medium text-xl c-green">Three easy steps</div>
+        <div class="mb-4 font-medium text-xl text-primary">
+          Three easy steps
+        </div>
 
         <div class="grid grid-rows-[auto,auto,auto] gap-8">
           <div
@@ -32,7 +37,7 @@ const steps = [
             class="flex items-center gap-2 font-bold"
           >
             <div
-              class="bg-green-500 w-10 h-10 p-2 rounded-full grid place-items-center text-white"
+              class="bg-primary w-10 h-10 p-2 rounded-full grid place-items-center text-white"
             >
               {{ i + 1 }}
             </div>

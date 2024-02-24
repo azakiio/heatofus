@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const panel = ref<HTMLDivElement>();
 
-
-
 const toggleAccordion = () => {
   if (panel.value?.style.maxHeight) {
     panel.value.style.maxHeight = "";
@@ -15,15 +13,12 @@ const toggleAccordion = () => {
 </script>
 
 <template>
-  <div>
-    <button @click="toggleAccordion" class="accordion">Section 3</button>
+  <div class="flex flex-col">
+    <button @click="toggleAccordion">
+      <slot name="trigger"> Section 3 </slot>
+    </button>
     <div class="panel" ref="panel">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat.
-      </p>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -41,16 +36,10 @@ const toggleAccordion = () => {
   transition: 0.4s;
 }
 
-.active,
-.accordion:hover {
-  background-color: #ccc;
-}
-
 .panel {
   padding: 0 18px;
-  background-color: white;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.2s ease-out;
+  transition: max-height 0.2s;
 }
 </style>
