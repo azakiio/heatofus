@@ -72,21 +72,13 @@ const signUpGoogle = async () => {
             type="password"
             v-model="password"
             name="password"
-          /><button
-            type="button"
-            aria-pressed="false"
-            data-state="off"
-            class="justify-center ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300 dark:data-[state=on]:bg-zinc-800 dark:data-[state=on]:text-zinc-50 hover:bg-transparent text-zinc-500 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 data-[state=on]:bg-transparent data-[state=on]:text-zinc-700 px-3 absolute right-0 flex h-full items-center rounded-md bg-transparent text-base font-medium"
-            aria-label="Show password"
-          >
-            <div class="i-mdi-eye"></div>
-          </button>
+          />
         </div>
         <div class="text-sm text-red-700">
           {{ errorMessage }}
         </div>
       </div>
-      <button class="btn bg-fg c-bg" type="submit">Sign up</button>
+      <button class="btn bg-primary" type="submit">Sign up</button>
     </form>
     <div class="text-md flex justify-center">
       Already have an account? &nbsp;<a class="link" href="/auth/signin"
@@ -98,9 +90,7 @@ const signUpGoogle = async () => {
         <span class="w-full border-t"></span>
       </div>
       <div class="relative flex justify-center text-xs uppercase">
-        <span class="text-muted-foreground bg-white px-2"
-          >Or continue with</span
-        >
+        <span class="text-muted-foreground bg-bg px-2">Or continue with</span>
       </div>
     </div>
     <button class="btn bg-fg c-bg" @click="signUpGoogle">

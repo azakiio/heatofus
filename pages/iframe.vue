@@ -40,19 +40,21 @@ const { data: assistant } = await useAsyncData(async () => {
 });
 
 const addMessage = async () => {
-  const runPromise = $fetch("/api/threads/chat", {
-    method: "post",
-    body: {
-      thread_id: threadRef.value,
-      assistant_id,
-      message: message.value,
-    },
-  });
-  message.value = "";
-  runId.value = await runPromise;
+  if (message.value) {
+    const runPromise = $fetch("/api/threads/chat", {
+      method: "post",
+      body: {
+        thread_id: threadRef.value,
+        assistant_id,
+        message: message.value,
+      },
+    });
+    message.value = "";
+    runId.value = await runPromise;
 
-  await refresh();
-  checkRunStatus();
+    await refresh();
+    checkRunStatus();
+  }
 };
 
 const closeChat = async () => {
@@ -111,7 +113,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
     <div class="flex gap-2 items-center p-2">
       <div class="mr-auto text-xl font-medium">Halbelf</div>
       <button
-        class="p-2 rounded-lg"
+        class="btn-circle"
         title="clear chat"
         @click="
           async () => {
@@ -122,11 +124,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
       >
         <div class="i-mdi-refresh"></div>
       </button>
-      <button
-        class="p-2 hover:bg-red hover:text-red-1 transition-colors rounded-lg"
-        title="Close Chat"
-        @click="closeChat"
-      >
+      <button class="btn-circle bg-red text-white" title="Close Chat" @click="closeChat">
         <div class="i-mdi-close"></div>
       </button>
     </div>
@@ -143,7 +141,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
           .filter((line) => line)"
       >
         <div
-          class="bg-stone-200 p-2 rounded-lg w-fit mr-8 justify-self-start shadow-lg"
+          class="bg-bg p-2 rounded-lg w-fit mr-8 justify-self-start shadow-lg"
           v-html="item"
         />
       </div>
@@ -178,7 +176,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
           .replace(/\r\n/g, '\n')
           .split('\n')
           .filter((line) => line)"
-        class="p-1 border rounded bg-stone-200 shadow"
+        class="p-1 border rounded bg-bg shadow"
       >
         {{ item }}
       </button>

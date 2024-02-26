@@ -93,9 +93,9 @@ async function embedChatWidget() {
   chatIframe.style.right = "20px";
   chatIframe.style.width = "350px"; // Default width, could be responsive.
   chatIframe.style.height = "450px"; // Default height.
-  chatIframe.style.border = "1px solid black";
+  // chatIframe.style.border = "1px solid black";
   chatIframe.style.borderRadius = "10px";
-  chatIframe.style.boxShadow = "0px 6px 10px 0px rgb(0,0,0,0.5)";
+  chatIframe.style.boxShadow = "0px 2px 10px 0px rgb(0,0,0,0.5)";
   chatIframe.style.zIndex = "999";
 
   document.body.appendChild(chatIframe);

@@ -2,7 +2,6 @@
 definePageMeta({
   middleware: ["auth"],
 });
-const { assistant_id } = useRoute().params;
 </script>
 
 <template>
@@ -10,6 +9,6 @@ const { assistant_id } = useRoute().params;
     <Customize />
     <Files />
     <Conversations />
-    <Script />
+    <Scripts />
   </div>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { bubbleScript } from "./scripts";
+import { stripIndent } from "common-tags";
 const { assistant_id } = useRoute().params;
 </script>
 
@@ -9,26 +9,6 @@ const { assistant_id } = useRoute().params;
     <div
       class="grid w-full gap-8 border border-zinc-200 bg-white p-6 shadow-lg sm:rounded-lg dark:border-zinc-800 dark:bg-zinc-950 h-auto max-w-3xl overflow-y-auto lg:w-auto"
     >
-      <!-- <div class="flex flex-col gap-4">
-        <div class="-mb-2">
-          <p class="text-sm text-zinc-500">
-            To add the chatbot any where on your website, add this iframe to
-            your html code
-          </p>
-        </div>
-
-        <code
-          class="w-full overflow-auto rounded bg-zinc-100 p-2 text-xs whitespace-pre-line"
-        >
-          {{ iframeScript }}
-        </code>
-
-        <button class="btn bg-white border self-center mt-a hover:bg-light">
-          Copy iframe
-          <span class="i-mdi-content-copy" />
-        </button>
-      </div> -->
-
       <div class="flex flex-col gap-4">
         <div>
           <p class="text-sm text-zinc-500">
@@ -40,7 +20,13 @@ const { assistant_id } = useRoute().params;
         <code
           class="w-full overflow-auto rounded bg-zinc-100 p-2 text-xs whitespace-pre-line"
         >
-          {{ bubbleScript(assistant_id as string) }}
+          {{ stripIndent`
+          <script
+            src="https://www.halbelf.com/embed.js"
+            chatbotId="${assistant_id}"
+            defer
+          ></script>
+          `}}
         </code>
 
         <button class="btn bg-white border self-center hover:bg-light mt-a">

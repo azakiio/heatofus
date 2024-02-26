@@ -22,8 +22,6 @@ const cabinets = computed(() => {
 
 var items = cabinets.value.map((cabinet) => ({ w: cabinet, v: cabinet }));
 
-console.log(knapsack(items, total.value));
-
 const newSize = ref(0);
 
 const getCombination = (total: number, size: number) => {

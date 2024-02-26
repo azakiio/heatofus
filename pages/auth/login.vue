@@ -64,6 +64,7 @@ const signUpGoogle = async () => {
           <input
             class="input"
             id="password"
+            required
             aria-label="password"
             placeholder="Password"
             autocapitalize="none"
@@ -75,13 +76,13 @@ const signUpGoogle = async () => {
           />
         </div>
       </div>
-      <div class="text-sm text-red-700">
+      <div v-if="errorMessage" class="text-sm text-red-700">
         {{ errorMessage }}
       </div>
       <a class="place-self-end link" type="button" href="/auth/password-reset"
         >Forgot password?</a
       >
-      <button class="btn bg-fg c-bg" type="submit">Log in</button>
+      <button class="btn bg-primary" type="submit">Log in</button>
     </form>
     <div class="text-md flex justify-center">
       Don't have an account? &nbsp;<NuxtLink class="link" href="/auth/signup"
@@ -93,7 +94,7 @@ const signUpGoogle = async () => {
         <span class="w-full border-t"></span>
       </div>
       <div class="relative flex justify-center text-xs uppercase">
-        <span class="text-muted-foreground bg-white px-2"
+        <span class="text-muted-foreground bg-bg px-2"
           >Or continue with</span
         >
       </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const consent = useCookie("consent", { default: () => "unset" });
 const openModal = () => {
-  document.querySelector("dialog")?.showModal();
+  (document.querySelector("#cookie-dialog") as HTMLDialogElement)?.showModal();
 };
 </script>
 

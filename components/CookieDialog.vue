@@ -3,7 +3,7 @@ const dialog = ref();
 </script>
 
 <template>
-  <dialog class="p-4 rounded-lg max-w-lg bg-bg" ref="dialog">
+  <dialog id="cookie-dialog" class="p-4 rounded-lg max-w-lg bg-bg" ref="dialog">
     <div class="flex justify-between mb-4">
       <h1 class="font-bold text-xl">Cookie Preferences</h1>
       <button class="btn-circle p-1 shadow-none" @click="dialog.close()">
@@ -24,11 +24,9 @@ const dialog = ref();
             />Strictly Necessary cookies
           </div>
         </template>
-        <template>
-          <p class="py-2">
-            These are the cookies required for Halbelf to function.
-          </p>
-        </template>
+        <p class="py-2">
+          These are the cookies required for Halbelf to function.
+        </p>
       </Accordion>
       <hr />
       <Accordion>
@@ -40,12 +38,10 @@ const dialog = ref();
             />Analytics cookies
           </div>
         </template>
-        <template>
-          <p class="py-2">
-            We include analytics cookies to understand how you use our product
-            and design better experiences.
-          </p>
-        </template>
+        <p class="py-2">
+          We include analytics cookies to understand how you use our product and
+          design better experiences.
+        </p>
       </Accordion>
     </div>
   </dialog>

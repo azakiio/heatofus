@@ -14,10 +14,13 @@ const steps = [
       class="layout md:grid-cols-[2fr_1fr] gap-24 w-full content-center min-h-90vh"
     >
       <div>
-        <h2 class="text-5xl font-bold mb-8">Custom ChatGPT for your website</h2>
+        <h2 class="text-5xl font-bold mb-8">
+          AI that understands your website, and your visitors
+        </h2>
         <p class="text-lg font-medium text-black/75 mb-4">
-          Build a custom GPT, embed it on your website and let it handle
+          Build a custom chatbot, embed it on your website and let it handle
           customer support, lead generation, engage with your users, and more.
+          
         </p>
         <NuxtLink
           class="btn bg-primary text-white w-fit"

@@ -14,7 +14,7 @@ const toggleAccordion = () => {
 
 <template>
   <div class="flex flex-col">
-    <button @click="toggleAccordion">
+    <button @click="toggleAccordion" class="bg-transparent">
       <slot name="trigger"> Section 3 </slot>
     </button>
     <div class="panel" ref="panel">

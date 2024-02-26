@@ -2,7 +2,7 @@
 const scrolledPast = ref(false);
 
 const openModal = () => {
-  document.querySelector("dialog")?.showModal();
+  (document.querySelector("#cookie-dialog") as HTMLDialogElement)?.showModal();
 };
 
 const handleScroll = () => {
@@ -25,7 +25,7 @@ onMounted(() => {
         <div class="flex flex-col items-start gap-2">
           <NuxtLink to="/privacy" class="link"> Privacy Policy</NuxtLink>
           <NuxtLink class="link" to="/terms"> Terms of Service </NuxtLink>
-          <button @click="openModal" class="link" to="/terms">
+          <button @click="openModal" class="link bg-transparent" to="/terms">
             Cookie Preferences
           </button>
         </div>
@@ -48,6 +48,5 @@ onMounted(() => {
         >support@halbelf.com</NuxtLink
       >
     </div>
-    <CookieDialog />
   </div>
 </template>
