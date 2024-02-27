@@ -5,14 +5,14 @@
 }
 
 :root {
-  --bg: 95% 0.01 150;
+  --bg: 95% 0.005 150;
   --fg: 15% 0.03 150;
   --p: 70% 0.125 150;
 }
 
 :root[data-theme="dark"] {
-  --bg: #18181b;
-  --fg: #f4f4f5;
+  --bg: 15% 0.03 150;
+  --fg: 95% 0.005 150;
   --p: 70% 0.125 150;
 }
 
@@ -26,6 +26,7 @@ body:has(dialog[open]) {
 
 * {
   @apply border-color-primary/50;
+  /* scrollbar-width: thin; */
 }
 
 .overflow-ellipsis {
@@ -50,4 +51,24 @@ body:has(dialog[open]) {
 
 .link:hover::after {
   transform: scaleX(1);
+}
+
+.scrollbars *::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+}
+
+.scrollbars *::-webkit-scrollbar-track {
+  background-color: transparent;
+  /* (var(--bg-color)); */
+}
+
+.scrollbars *::-webkit-scrollbar-thumb {
+  background-color: oklch(var(--p) / 0.5);
+  border-radius: 1rem;
+}
+
+.scrollbars *::-webkit-scrollbar-thumb:hover {
+  background-color: oklch(var(--p));
 }

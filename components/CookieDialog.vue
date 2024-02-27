@@ -1,9 +1,14 @@
 <script setup>
 const dialog = ref();
+const consent = useCookie("consent");
 </script>
 
 <template>
-  <dialog id="cookie-dialog" class="p-4 rounded-lg max-w-lg bg-bg" ref="dialog">
+  <dialog
+    id="cookie-dialog"
+    class="p-4 rounded-lg max-w-lg bg-bg c-fg"
+    ref="dialog"
+  >
     <div class="flex justify-between mb-4">
       <h1 class="font-bold text-xl">Cookie Preferences</h1>
       <button class="btn-circle p-1 shadow-none" @click="dialog.close()">
@@ -20,7 +25,7 @@ const dialog = ref();
           <div class="flex gap-2 items-center p-2 font-bold w-full">
             <Icon
               name="mdi:check"
-              class="bg-green-600 c-white rounded-md w-5 h-5 p-0.5"
+              class="bg-primary c-bg rounded-md w-5 h-5 p-0.5"
             />Strictly Necessary cookies
           </div>
         </template>
@@ -34,14 +39,17 @@ const dialog = ref();
           <div class="flex gap-2 items-center p-2 font-bold w-full">
             <Icon
               name="mdi:check"
-              class="bg-green-600 c-white rounded-md w-5 h-5 p-0.5"
+              class="bg-primary c-bg rounded-md w-5 h-5 p-0.5"
             />Analytics cookies
           </div>
         </template>
-        <p class="py-2">
-          We include analytics cookies to understand how you use our product and
-          design better experiences.
-        </p>
+        <div class="flex items-center gap-4">
+          <Toggle v-model="consent" />
+          <p class="py-2">
+            We include analytics cookies to understand how you use our product
+            and design better experiences.
+          </p>
+        </div>
       </Accordion>
     </div>
   </dialog>

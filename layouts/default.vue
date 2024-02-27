@@ -13,9 +13,6 @@ useHead({
       defer: true,
     },
   ],
-  bodyAttrs: {
-    class: "bg-bg text-fg;",
-  },
 });
 </script>
 

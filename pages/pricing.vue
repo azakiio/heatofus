@@ -67,7 +67,7 @@ const getPaymentLink = (plan: any) => {
               yearly ? "year" : "month"
             }}</span>
           </div>
-          <NuxtLink :to="getPaymentLink(plan)" class="btn bg-dark c-light">
+          <NuxtLink :to="getPaymentLink(plan)" class="btn bg-fg text-bg">
             {{ plan?.cta || "Subscribe" }}
           </NuxtLink>
         </div>

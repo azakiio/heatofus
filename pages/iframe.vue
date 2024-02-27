@@ -124,7 +124,11 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
       >
         <div class="i-mdi-refresh"></div>
       </button>
-      <button class="btn-circle bg-red text-white" title="Close Chat" @click="closeChat">
+      <button
+        class="btn-circle bg-red text-white"
+        title="Close Chat"
+        @click="closeChat"
+      >
         <div class="i-mdi-close"></div>
       </button>
     </div>
@@ -141,7 +145,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
           .filter((line) => line)"
       >
         <div
-          class="bg-bg p-2 rounded-lg w-fit mr-8 justify-self-start shadow-lg"
+          class="bg-bg c-fg border p-2 rounded-lg w-fit mr-8 justify-self-start shadow-lg"
           v-html="item"
         />
       </div>
@@ -152,8 +156,8 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
         <div
           class="p-2 rounded-lg w-fit shadow-lg prose"
           :class="{
-            'mr-8 justify-self-start bg-stone-200': role === 'assistant',
-            'ml-8 justify-self-end bg-green-500 c-white': role === 'user',
+            'mr-8 justify-self-start bg-bg c-fg': role === 'assistant',
+            'ml-8 justify-self-end bg-primary c-bg': role === 'user',
           }"
           v-html="marked.parse(content)"
         />
@@ -189,7 +193,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
       <input
         type="text"
         v-model="message"
-        class="w-full border-none p-2 outline-none"
+        class="w-full border-none p-2 outline-none bg-transparent"
         placeholder="Message..."
       />
       <button class="btn" type="submit"><Icon name="mdi:send" /></button>

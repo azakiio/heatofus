@@ -17,13 +17,13 @@ const steps = [
         <h2 class="text-5xl font-bold mb-8">
           AI that understands your website, and your visitors
         </h2>
-        <p class="text-lg font-medium text-black/75 mb-4">
+        <p class="text-lg font-medium text-fg/75 mb-4">
           Build a custom chatbot, embed it on your website and let it handle
           customer support, lead generation, engage with your users, and more.
           
         </p>
         <NuxtLink
-          class="btn bg-primary text-white w-fit"
+          class="btn bg-primary text-bg w-fit"
           to="/auth/signup"
           size="xl"
           >Try Now!</NuxtLink
@@ -56,7 +56,7 @@ const steps = [
       <div v-for="feature in features" class="flex flex-col items-start gap-1">
         <Icon :name="feature.icon" class="w-8 h-8"></Icon>
         <h5 class="pt-1 text-lg font-medium">{{ feature.title }}</h5>
-        <p class="text-sm font-normal text-zinc-700">
+        <p class="text-sm font-normal text-fg/70">
           {{ feature.description }}
         </p>
       </div>
