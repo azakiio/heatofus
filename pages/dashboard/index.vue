@@ -50,7 +50,7 @@ const createAssistant = async () => {
       <div
         v-for="assistant in assistantList"
         :key="assistant.object_id || ''"
-        class="flex flex-col gap-4 justify-items-start border-2 border-primary rounded-lg p-4"
+        class="flex flex-col gap-4 justify-items-start border-2 rounded-lg p-4"
       >
         <div class="flex items-center justify-between w-full">
           <NuxtLink class="link" :to="`/dashboard/${assistant.object_id}`">
@@ -96,7 +96,7 @@ const createAssistant = async () => {
       </div>
       <button
         @click="createAssistant"
-        class="link p-10 rounded-lg border-2 place-self-center"
+        class="link p-10 rounded-lg border-2 place-self-center bg-transparent"
       >
         Add Assistant
       </button>

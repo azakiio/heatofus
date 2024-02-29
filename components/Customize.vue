@@ -11,7 +11,7 @@ const placeholder =
   "You are a customer support chatbot. Use your knowledge base to best respond to customer queries.";
 
 const submit = async (e: Event) => {
-  const formData = new FormData(e.currentTarget);
+  const formData = new FormData(e.currentTarget as HTMLFormElement);
   formData.append("assistant_id", assistant_id as string);
 
   pending.value = true;
@@ -20,7 +20,7 @@ const submit = async (e: Event) => {
     body: formData,
   });
   console.log(data);
-  refresh();
+  await refresh();
   pending.value = false;
 };
 </script>
@@ -58,7 +58,7 @@ const submit = async (e: Event) => {
         <select
           name="model"
           :value="assistant?.model"
-          class="p-2 border-2 rounded-lg"
+          class="p-2 border-2 rounded-lg bg-transparent"
         >
           <option v-for="option in models" :value="option">
             {{ option }}
@@ -69,25 +69,33 @@ const submit = async (e: Event) => {
       <div class="w-full">
         <div class="font-medium">Initial Messages</div>
         <textarea
-          :value="(assistant?.metadata as any).initialMessages"
+          :value="(assistant?.metadata as any)?.initialMessages"
           name="initialMessages"
           rows="4"
-          :placeholder="placeholder"
+          placeholder="Hi! What can I help you with?"
           class="input"
         />
+        <div class="opacity-75">Enter each message in a new line.</div>
       </div>
 
       <div class="w-full">
         <div class="font-medium">Suggestions</div>
         <textarea
-          :value="(assistant?.metadata as any).suggestions"
+          :value="(assistant?.metadata as any)?.suggestions"
           name="suggestions"
           rows="4"
-          :placeholder="placeholder"
+          placeholder="What is example.com?"
           class="input"
         />
+        <div class="opacity-75">Enter each message in a new line.</div>
       </div>
-      <button class="btn variant-blue" :disabled="pending">
+
+      <div class="w-full">
+        <div class="font-medium">Theme Color</div>
+        <input type="color" name="theme-color" />
+      </div>
+
+      <button class="btn bg-primary" :disabled="pending">
         <div
           v-if="pending"
           class="i-eos-icons:three-dots-loading w-8 h-8"

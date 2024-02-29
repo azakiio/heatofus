@@ -1,13 +1,13 @@
 <template>
   <section class="content-start">
     <div class="grid grid-cols-[auto_auto] justify-start gap-4">
-      <div class="font-bold text-3xl mb-4">Conversations</div>
-      <button
+      <div class="font-bold text-3xl mb-4">Chat Logs</div>
+      <!-- <button
         class="btn p-0 w-10 h-10 rounded-full justify-center"
         @click="createThread"
       >
         +
-      </button>
+      </button> -->
     </div>
     <div class="grid gap-4">
       <div

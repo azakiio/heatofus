@@ -5,6 +5,8 @@ async function embedChatWidget() {
 
   const currentScript = document.currentScript;
   const origin = new URL(currentScript.src).origin;
+  console.log(origin)
+  console.log(currentScript)
   const assistant_id = currentScript.getAttribute("chatbotId");
   const toggleChat = () => {
     const isChatIframeVisible = chatIframe.style.display !== "none";

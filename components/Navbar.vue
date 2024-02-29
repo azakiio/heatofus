@@ -29,9 +29,9 @@ onMounted(() => {
 
 <template>
   <header
-    class="sticky top-0 border-b-2 border-transparent transition-all duration-500 bg-bg z-10"
+    class="sticky top-0 border-b-2 border-transparent transition-all duration-500 z-99"
     :class="{
-      'border-b-primary shadow-lg': scrolledPast,
+      'border-b-primary shadow-lg bg-bg': scrolledPast,
     }"
   >
     <div
