@@ -16,13 +16,13 @@ const openModal = () => {
     <div class="flex flex-row items-center justify-between">
       <div class="flex flex-row items-center gap-3">
         <button
-          class="btn border bg-transparent h-7 rounded-md px-3"
+          class="btn bg-fg c-bg h-8 px-3"
           type="button"
           @click="consent = 'reject'"
         >
           Reject</button
         ><button
-          class="btn border bg-transparent h-7 rounded-md px-3"
+          class="btn bg-fg c-bg h-8 px-3"
           type="button"
           @click="openModal"
         >
@@ -30,7 +30,7 @@ const openModal = () => {
         </button>
       </div>
       <button
-        class="btn text-zinc-50 bg-zinc-900 h-7 rounded-md px-3 w-32"
+        class="btn h-8 w-32"
         @click="consent = 'accept'"
       >
         Accept

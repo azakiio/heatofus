@@ -1,6 +1,14 @@
 <script setup>
 const dialog = ref();
 const consent = useCookie("consent");
+const toggleRef = ref(consent.value === "accept");
+watch(toggleRef, () => {
+  if (toggleRef.value) {
+    consent.value = "accept";
+  } else {
+    consent.value = "reject";
+  }
+});
 </script>
 
 <template>
@@ -37,14 +45,23 @@ const consent = useCookie("consent");
       <Accordion>
         <template #trigger>
           <div class="flex gap-2 items-center p-2 font-bold w-full">
-            <Icon
-              name="mdi:check"
-              class="bg-primary c-bg rounded-md w-5 h-5 p-0.5"
-            />Analytics cookies
+            <template v-if="toggleRef">
+              <Icon
+                name="mdi:check"
+                class="bg-primary c-bg rounded-md w-5 h-5 p-0.5"
+              />
+            </template>
+            <template v-else>
+              <Icon
+                name="mdi:close"
+                class="bg-fg c-bg rounded-md w-5 h-5 p-0.5"
+              />
+            </template>
+            Analytics cookies
           </div>
         </template>
         <div class="flex items-center gap-4">
-          <Toggle v-model="consent" />
+          <Toggle v-model="toggleRef" />
           <p class="py-2">
             We include analytics cookies to understand how you use our product
             and design better experiences.
