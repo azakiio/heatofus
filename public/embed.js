@@ -4,9 +4,8 @@ async function embedChatWidget() {
   if (window.chatWidgetAlreadyEmbedded) return;
 
   const currentScript = document.currentScript;
-  const origin = new URL(currentScript.src).origin;
-  console.log(origin)
-  console.log(currentScript)
+  console.log(currentScript);
+  const origin = "https://halbelf.com";
   const assistant_id = currentScript.getAttribute("chatbotId");
   const toggleChat = () => {
     const isChatIframeVisible = chatIframe.style.display !== "none";

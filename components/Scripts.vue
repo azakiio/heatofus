@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { stripIndent } from "common-tags";
+import { getScript } from "~/utils";
 const { assistant_id } = useRoute().params;
 const props = defineProps<{ iconColor: string }>();
+
+const copyScript = () => {
+  navigator.clipboard.writeText(getScript(assistant_id as string));
+};
 </script>
 
 <template>
@@ -21,17 +25,13 @@ const props = defineProps<{ iconColor: string }>();
         <code
           class="w-full overflow-auto rounded p-2 text-xs whitespace-pre-line bg-black/5"
         >
-          {{ stripIndent`
-          <script
-            src="https://www.halbelf.com/embed.js"
-            chatbotId="${assistant_id}"
-            iconColor="${props.iconColor || '#000000'}"
-            defer
-          ></script>
-          `}}
+          {{ getScript(assistant_id as string) }}
         </code>
 
-        <button class="btn bg-primary border self-center mt-a">
+        <button
+          @click="copyScript"
+          class="btn bg-primary border self-center mt-a"
+        >
           Copy Script <span class="i-mdi-content-copy" />
         </button>
       </div>

@@ -1,3 +1,5 @@
+import { stripIndent } from "common-tags";
+
 export const range = (start: number, stop: number, step = 1) => {
   return Array.from(
     { length: (stop - start) / step + 1 },
@@ -54,3 +56,10 @@ function getContrastColor(R: number, G: number, B: number, A: number) {
 
   return brightness > 186 ? "#000000" : "#FFFFFF";
 }
+
+export const getScript = (assistant_id: string, iconColor = "#000000") =>
+  stripIndent`<script
+  src="https://www.halbelf.com/embed.js"
+  chatbotId="${assistant_id}"
+  iconColor="${iconColor}"
+  defer></script>`;
