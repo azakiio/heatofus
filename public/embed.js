@@ -3,9 +3,10 @@ async function embedChatWidget() {
   // Check if the chat widget is already embedded to avoid re-embedding.
   if (window.chatWidgetAlreadyEmbedded) return;
 
-  const currentScript = document.currentScript;
+  const currentScript = document.getElementById("halbelf-bot");
+  const origin = new URL(currentScript.src).origin;
   console.log(currentScript);
-  const origin = "https://halbelf.com";
+  console.log(origin);
   const assistant_id = currentScript.getAttribute("chatbotId");
   const toggleChat = () => {
     const isChatIframeVisible = chatIframe.style.display !== "none";
@@ -107,6 +108,7 @@ async function embedChatWidget() {
 
   chatButton.addEventListener("click", toggleChat);
   window.addEventListener("message", (e) => {
+    console.log(e.origin);
     if (e.origin !== origin) {
       return;
     }

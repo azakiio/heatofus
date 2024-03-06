@@ -11,6 +11,7 @@ useHead({
       defer: true,
     },
     {
+      id: "halbelf-bot",
       src: "/embed.js",
       chatbotId: "asst_AUtf2nABXi5Eqluniw9CAEiG",
       defer: true,

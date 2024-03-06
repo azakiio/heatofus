@@ -61,7 +61,7 @@ onMounted(() => {
               {{ link.label }}
             </NuxtLink>
             <div class="flex">
-              <template v-show="user?.id" >
+              <template v-if="user?.id" >
                 <NuxtLink
                   to="/dashboard"
                   class="btn-circle shadow-none"
@@ -78,7 +78,7 @@ onMounted(() => {
                   <Icon name="mdi:account-circle" class="h-6 w-6" />
                 </NuxtLink>
               </template>
-              <template v-show="!user?.id">
+              <template v-else>
                 <NuxtLink to="/auth/login" class="link">Log in</NuxtLink>
                 <NuxtLink to="/auth/signup" class="btn bg-fg c-bg px-2 py-1">
                   Try for Free
@@ -96,7 +96,7 @@ onMounted(() => {
       </nav>
 
       <div class="hidden md:flex gap-4 items-center justify-self-end">
-        <template v-if="user?.id" :key="user?.id">
+        <template v-if="user?.id">
           <NuxtLink
             to="/dashboard"
             class="btn-circle shadow-none"

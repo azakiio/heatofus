@@ -59,6 +59,7 @@ function getContrastColor(R: number, G: number, B: number, A: number) {
 
 export const getScript = (assistant_id: string, iconColor = "#000000") =>
   stripIndent`<script
+  id="halbelf-bot"
   src="https://www.halbelf.com/embed.js"
   chatbotId="${assistant_id}"
   iconColor="${iconColor}"
