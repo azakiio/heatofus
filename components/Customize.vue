@@ -20,7 +20,7 @@ const submit = async (e: Event) => {
     body: formData,
   });
   console.log(data);
-  
+
   await refresh();
   pending.value = false;
 };
@@ -94,7 +94,6 @@ const submit = async (e: Event) => {
       <div class="w-full">
         <div class="font-medium">User Message Color</div>
         <input type="color" name="chatColor" :value="assistant?.chatColor" />
-        {{ hexToHSL(assistant?.chatColor || "") }}
       </div>
 
       <div class="w-full">

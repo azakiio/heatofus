@@ -167,7 +167,7 @@ useHead({
         <div
           class="p-2 rounded-lg w-fit shadow-lg prose"
           :class="{
-            'mr-8 justify-self-start bg-bg c-fg': role === 'assistant',
+            'mr-8 justify-self-start border bg-bg c-fg': role === 'assistant',
             'ml-8 justify-self-end bg-primary text-color': role === 'user',
           }"
           v-html="marked.parse(content)"
