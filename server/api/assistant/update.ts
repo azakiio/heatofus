@@ -11,14 +11,18 @@ export default defineEventHandler(async (event) => {
   const model = formData.get("model") as string;
   const initialMessages = formData.get("initialMessages") as string;
   const suggestions = formData.get("suggestions") as string;
+  const iconColor = formData.get("iconColor") as string;
+  const chatColor = formData.get("chatColor") as string;
 
   const assistant = await openai.beta.assistants.update(assistant_id, {
-    name: name,
-    instructions: instructions,
-    model: model,
+    name,
+    instructions,
+    model,
     metadata: {
-      initialMessages: initialMessages,
-      suggestions: suggestions,
+      initialMessages,
+      suggestions,
+      iconColor,
+      chatColor,
     },
   });
 
@@ -33,6 +37,8 @@ export default defineEventHandler(async (event) => {
       model: assistant.model,
       instructions: assistant?.instructions,
       file_ids: assistant?.file_ids,
+      iconColor,
+      chatColor,
     },
   });
   console.log(statusText, assistant);

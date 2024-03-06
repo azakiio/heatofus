@@ -26,9 +26,9 @@ export default defineConfig({
   transformers: [transformerDirectives()],
   theme: {
     colors: {
-      bg: "oklch(var(--bg))",
-      fg: "oklch(var(--fg))",
-      primary: "oklch(var(--p))",
+      bg: "oklch(from var(--bg) l c h / var(--un-bg-opacity))",
+      fg: "oklch(from var(--fg) l c h / var(--un-bg-opacity))",
+      primary: "oklch(from var(--p) l c h / var(--un-bg-opacity))",
     },
     
   },

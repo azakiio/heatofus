@@ -18,6 +18,8 @@ export default defineEventHandler(async (event) => {
     metadata: {
       initialMessages: body?.initialMessages,
       suggestions: body?.suggestions,
+      iconColor: body?.iconColor || "#000000",
+      chatColor: body?.chatColor || "#3B81F6",
     },
   });
 
@@ -29,6 +31,8 @@ export default defineEventHandler(async (event) => {
     meta: {
       model: assistant.model,
       instructions: assistant?.instructions,
+      iconColor: body?.iconColor,
+      chatColor: body?.chatColor,
     },
   });
   console.log(statusText, assistant);

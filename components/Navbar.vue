@@ -47,7 +47,7 @@ onMounted(() => {
 
       <div class="md:hidden justify-self-end">
         <button class="btn-circle" @click="toggleMenu">
-          <Icon name="mdi:menu" class="w-6 h-6" />
+          <Icon :name="isMenuOpen ? 'mdi:close' : 'mdi:menu'" class="w-6 h-6" />
         </button>
         <div
           class="fixed right-0 top-4rem bg-bg p-4 border-2"

@@ -5,15 +5,16 @@
 }
 
 :root {
-  --bg: 95% 0.005 150;
-  --fg: 15% 0.03 150;
-  --p: 70% 0.125 150;
+  --theme: 150;
+  --bg: 95% 0.005 var(--theme);
+  --fg: 15% 0.03 var(--theme);
+  --p: 70% 0.125 var(--theme);
 }
 
 :root[data-theme="dark"] {
-  --bg: 15% 0.03 150;
-  --fg: 95% 0.005 150;
-  --p: 70% 0.125 150;
+  --bg: oklch(15%, 0.03, var(--theme));
+  --fg: oklch(95%, 0.005, var(--theme));
+  --p: oklch(70%, 0.125, var(--theme));
 }
 
 html {
@@ -65,10 +66,10 @@ body:has(dialog[open]) {
 }
 
 .scrollbars *::-webkit-scrollbar-thumb {
-  background-color: oklch(var(--p) / 0.5);
+  background-color: oklch(from var(--p) l c h / 0.5);
   border-radius: 1rem;
 }
 
 .scrollbars *::-webkit-scrollbar-thumb:hover {
-  background-color: oklch(var(--p));
+  background-color: var(--p);
 }

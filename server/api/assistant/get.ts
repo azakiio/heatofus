@@ -17,7 +17,8 @@ export default defineEventHandler(async (event) => {
       initialMessages: (assistant.metadata as any)?.initialMessages as
         | string
         | undefined,
+      iconColor: (assistant.metadata as any)?.iconColor as string | undefined,
+      chatColor: (assistant.metadata as any)?.chatColor as string | undefined,
     };
-  } catch (err) {
-  }
+  } catch (err) {}
 });

@@ -15,7 +15,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-primary/50 z-10 shadow-inner">
+  <div class="bg-primary z-10 shadow-inner" style="--un-bg-opacity: 0.5">
     <div class="grid grid-flow-col auto-cols-fr max-w-5xl mx-auto p-8">
       <div class="flex flex-col gap-8 justify-self-start">
         <NuxtLink to="/" class="flex justify-self-start items-center gap-1">

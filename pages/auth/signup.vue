@@ -1,8 +1,12 @@
 <script setup>
 const supabase = useSupabaseClient();
+const user = useSupabaseUser();
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
+if (user.value) {
+  navigateTo("/dashboard");
+}
 
 const signUp = async () => {
   const { error } = await supabase.auth.signUp({

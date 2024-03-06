@@ -9,7 +9,7 @@
         +
       </button> -->
     </div>
-    <div class="grid gap-4">
+    <div class="grid gap-4 max-h-lg overflow-auto">
       <div
         class="flex items-center justify-between border-2 p-2 rounded-lg"
         v-for="thread in threads"
@@ -21,7 +21,7 @@
         >
         <button
           @click="() => deleteThread(thread.object_id)"
-          class="rounded-full ml-8 p-2"
+          class="btn rounded-full p-2"
         >
           <div class="i-mdi-delete"></div>
         </button>

@@ -1,66 +1,56 @@
-export function knapsack(items: { w: number; v: number }[], capacity: number) {
-  // This implementation uses dynamic programming.
-  // Variable 'memo' is a grid(2-dimentional array) to store optimal solution for sub-problems,
-  // which will be later used as the code execution goes on.
-  // This is called memoization in programming.
-  // The cell will store best solution objects for different capacities and selectable items.
-  type Solution = { maxValue: number; subset: { w: number; v: number } };
+export const range = (start: number, stop: number, step = 1) => {
+  return Array.from(
+    { length: (stop - start) / step + 1 },
+    (_, i) => start + i * step
+  );
+};
 
-  var memo: Array<Solution[]> = [];
-  const NO_SOLUTION = { maxValue: 0, subset: [] };
+export function hexToHSL(hex: string) {
+  var c = hex.substring(1); // strip #
+  var rgb = parseInt(c, 16); // convert rrggbb to decimal
+  var r = (rgb >> 16) & 0xff; // extract red
+  var g = (rgb >> 8) & 0xff; // extract green
+  var b = (rgb >> 0) & 0xff; // extract blue
 
-  // Filling the sub-problem solutions grid.
-  for (var i = 0; i < items.length; i++) {
-    // Variable 'cap' is the capacity for sub-problems. In this example, 'cap' ranges from 1 to 6.
-    var row: Solution[] = [];
-    for (var cap = 1; cap <= capacity; cap++) {
-      row.push(getSolution(i, cap));
+  const onColor = getContrastColor(r, g, b, 1);
+
+  (r /= 255), (g /= 255), (b /= 255);
+
+  let max = Math.max(r, g, b);
+  let min = Math.min(r, g, b);
+  let h = 0;
+  let s = 0;
+  let l = (max + min) / 2;
+
+  if (max == min) {
+    h = s = 0; // achromatic
+  } else {
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
     }
-    memo.push(row);
+    h /= 6;
   }
 
-  // The right-bottom-corner cell of the grid contains the final solution for the whole problem.
-  return getLast();
+  return {
+    h: Math.round(h * 360),
+    s,
+    l,
+    onColor,
+  };
+}
 
-  function getLast() {
-    var lastRow = memo[memo.length - 1];
-    return lastRow[lastRow.length - 1];
-  }
+function getContrastColor(R: number, G: number, B: number, A: number) {
+  const brightness = R * 0.299 + G * 0.587 + B * 0.114 + (1 - A) * 255;
 
-  function getSolution(row: number, cap: number) {
-    // the column number starts from zero.
-    var col = cap - 1;
-    var lastItem = items[row];
-    // The remaining capacity for the sub-problem to solve.
-    var remaining = cap - lastItem.w;
-
-    // Refer to the last solution for this capacity,
-    // which is in the cell of the previous row with the same column
-    var lastSolution: Solution =
-      row > 0 ? memo[row - 1][col] || NO_SOLUTION : NO_SOLUTION;
-    // Refer to the last solution for the remaining capacity,
-    // which is in the cell of the previous row with the corresponding column
-    var lastSubSolution =
-      row > 0 ? memo[row - 1][remaining - 1] || NO_SOLUTION : NO_SOLUTION;
-
-    // If any one of the items weights greater than the 'cap', return the last solution
-    if (remaining < 0) {
-      return lastSolution;
-    }
-
-    // Compare the current best solution for the sub-problem with a specific capacity
-    // to a new solution trial with the lastItem(new item) added
-    var lastValue = lastSolution.maxValue;
-    var lastSubValue = lastSubSolution.maxValue;
-
-    var newValue = lastSubValue + lastItem.v;
-    if (newValue >= lastValue) {
-      // copy the subset of the last sub-problem solution
-      var _lastSubSet = lastSubSolution.subset.slice();
-      _lastSubSet.push(lastItem);
-      return { maxValue: newValue, subset: _lastSubSet };
-    } else {
-      return lastSolution;
-    }
-  }
+  return brightness > 186 ? "#000000" : "#FFFFFF";
 }

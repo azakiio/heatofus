@@ -106,12 +106,23 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
   },
   { immediate: false }
 );
+
+const { h, onColor } = hexToHSL(assistant.value?.chatColor || "#3B81F6");
+
+useHead({
+  htmlAttrs: {
+    style: `--p: oklch(from ${assistant.value?.chatColor} l c h);
+    --bg: oklch(from ${assistant.value?.chatColor} 95% 0.005 h);
+    --fg: oklch(from ${assistant.value?.chatColor} 15% 0.03 h);
+    --text-color: ${onColor};`,
+  },
+});
 </script>
 
 <template>
   <div class="grid grid-rows-[auto_1fr_auto] h-screen">
     <div class="flex gap-2 items-center p-2">
-      <div class="mr-auto text-xl font-medium">Halbelf</div>
+      <div class="mr-auto text-xl font-medium">{{ assistant?.name }}</div>
       <button
         class="btn-circle"
         title="clear chat"
@@ -157,7 +168,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
           class="p-2 rounded-lg w-fit shadow-lg prose"
           :class="{
             'mr-8 justify-self-start bg-bg c-fg': role === 'assistant',
-            'ml-8 justify-self-end bg-primary c-bg': role === 'user',
+            'ml-8 justify-self-end bg-primary text-color': role === 'user',
           }"
           v-html="marked.parse(content)"
         />
@@ -180,7 +191,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
           .replace(/\r\n/g, '\n')
           .split('\n')
           .filter((line) => line)"
-        class="p-1 border rounded bg-bg shadow"
+        class="p-1 rounded border bg-bg shadow"
       >
         {{ item }}
       </button>
@@ -200,3 +211,9 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
     </form>
   </div>
 </template>
+
+<style>
+.text-color {
+  color: var(--text-color);
+}
+</style>

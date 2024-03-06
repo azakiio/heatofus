@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { stripIndent } from "common-tags";
 const { assistant_id } = useRoute().params;
+const props = defineProps<{ iconColor: string }>();
 </script>
 
 <template>
@@ -24,6 +25,7 @@ const { assistant_id } = useRoute().params;
           <script
             src="https://www.halbelf.com/embed.js"
             chatbotId="${assistant_id}"
+            iconColor="${props.iconColor || '#000000'}"
             defer
           ></script>
           `}}
