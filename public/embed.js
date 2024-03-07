@@ -58,6 +58,14 @@ async function embedChatWidget() {
   chatButton.style.alignItems = "center";
   chatButton.style.boxShadow = "0px 6px 10px 0px rgb(0,0,0,0.5)";
   chatButton.style.zIndex = "1000"; // Ensure it's above most other elements.
+  chatButton.style.transitionProperty = "scale";
+  chatButton.style.transitionDuration = "0.3s";
+  chatButton.onmouseenter = () => {
+    chatButton.style.scale = "1.1";
+  };
+  chatButton.onmouseleave = () => {
+    chatButton.style.scale = "1";
+  };
   chatButton.innerHTML = `
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +107,6 @@ async function embedChatWidget() {
   chatIframe.style.right = "20px";
   chatIframe.style.width = "350px"; // Default width, could be responsive.
   chatIframe.style.height = "450px"; // Default height.
-  // chatIframe.style.border = "1px solid black";
   chatIframe.style.borderRadius = "10px";
   chatIframe.style.boxShadow = "0px 2px 10px 0px rgb(0,0,0,0.5)";
   chatIframe.style.zIndex = "999";
