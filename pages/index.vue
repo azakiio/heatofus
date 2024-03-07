@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { features } from "~/content/features";
 import bg from "~/assets/bg.png";
 
 const steps = [
@@ -58,19 +57,11 @@ const steps = [
         </div>
       </div>
     </section>
-
-    <section
-      class="layout grid grid-cols-2 gap-16 md:grid-cols-3 place-content-center my-24"
-    >
-      <div v-for="feature in features" class="flex flex-col items-start gap-1">
-        <Icon :name="feature.icon" class="w-8 h-8"></Icon>
-        <h5 class="pt-1 text-lg font-medium">{{ feature.title }}</h5>
-        <p class="text-sm font-normal text-fg/70">
-          {{ feature.description }}
-        </p>
-      </div>
-    </section>
   </div>
+
+  <HomeDemo />
+  <HomeFeatures />
+  <HomePricing />
 </template>
 
 <style>

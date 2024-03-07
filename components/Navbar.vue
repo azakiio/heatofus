@@ -5,8 +5,9 @@ interface Link {
 }
 
 const links: Link[] = [
-  { label: "Demo", href: "/demo" },
-  { label: "Pricing", href: "/pricing" },
+  { label: "Demo", href: "#demo" },
+  { label: "Features", href: "#features" },
+  { label: "Pricing", href: "#pricing" },
 ];
 
 const user = useSupabaseUser();
