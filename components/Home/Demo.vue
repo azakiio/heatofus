@@ -7,10 +7,8 @@ const videoEl = ref<HTMLVideoElement>();
 const togglePlay = () => {
   if (playing.value) {
     videoEl.value?.pause();
-    playing.value = false;
   } else {
     videoEl.value?.play();
-    playing.value = true;
   }
 };
 </script>
@@ -25,6 +23,8 @@ const togglePlay = () => {
     >
       <video
         ref="videoEl"
+        @play="() => (playing = true)"
+        @pause="() => (playing = false)"
         :src="demo_video"
         :poster="poster"
         controls
@@ -32,7 +32,6 @@ const togglePlay = () => {
       <button
         class="absolute z-10 inset-0 bottom-16"
         :class="{ 'bg-black/20': !playing, 'bg-transparent': playing }"
-        @play="() => console.log('hello')"
         @click="togglePlay"
       >
         <Icon
