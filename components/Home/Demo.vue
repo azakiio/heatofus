@@ -23,7 +23,12 @@ const togglePlay = () => {
     <div
       class="relative grid place-items-center max-w-5xl border-2 rounded-lg overflow-hidden mx-auto"
     >
-      <video ref="videoEl" :src="demo_video" :poster="poster" controls></video>
+      <video
+        ref="videoEl"
+        :src="demo_video"
+        :poster="poster"
+        controls
+      ></video>
       <button
         class="absolute z-10 inset-0 bottom-16"
         :class="{ 'bg-black/20': !playing, 'bg-transparent': playing }"
