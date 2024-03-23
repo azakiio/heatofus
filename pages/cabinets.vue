@@ -7,6 +7,7 @@ const cabinets = computed(() => {
     300,
     450,
     600,
+    640,
     800,
     900,
     1200,
@@ -50,7 +51,7 @@ const getCombination = (total: number, size: number) => {
             }
             return a.whole - b.whole;
           })
-          .slice(0, 10)"
+          .slice(0, -1)"
         class="grid grid-cols-2 grid-rows-2 border rounded-2 p-2 justify-items-end"
       >
         <div class="row-span-full place-self-center font-medium">

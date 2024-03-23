@@ -71,7 +71,7 @@ export const plans = {
       "Wordpress integration",
       "WhatsApp integration (coming soon)",
       "Option to Choose GPT-4",
-      "Remove 'Powered by Chatbase'",
+      "Remove 'Powered by Halbelf'",
       "Use your own custom domains",
     ],
     pricePerMonth: "$399",

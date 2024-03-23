@@ -6,9 +6,9 @@
 
 :root {
   --theme: 150;
-  --bg: 95% 0.005 var(--theme);
-  --fg: 15% 0.03 var(--theme);
-  --p: 70% 0.125 var(--theme);
+  --fg: oklch(15%, 0.03, var(--theme));
+  --bg: oklch(95%, 0.005, var(--theme));
+  --p: oklch(70%, 0.125, var(--theme));
 }
 
 :root[data-theme="dark"] {
@@ -23,6 +23,7 @@ html {
 
 body:has(dialog[open]) {
   overflow: hidden;
+  scrollbar-gutter: stable;
 }
 
 * {
