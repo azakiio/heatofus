@@ -13,18 +13,39 @@ const message = ref("");
 const runId = ref("");
 const pending = ref(false);
 
-const addMessage = async () => {
-  runId.value = await $fetch("/api/threads/chat", {
-    method: "post",
-    body: {
-      thread_id,
-      assistant_id,
-      message: message.value,
-    },
+const { data: assistant } = await useAsyncData(async () => {
+  const assistant = await $fetch("/api/assistant/get", {
+    query: { assistant_id },
   });
+  return assistant;
+});
 
-  refresh();
-  checkRunStatus();
+const scrollChat = () => {
+  chatBox.value?.scrollTo({
+    behavior: "smooth",
+    left: 0,
+    top: chatBox.value.scrollHeight,
+  });
+};
+
+const addMessage = async () => {
+  if (message.value) {
+    pending.value = true;
+    scrollChat();
+    const runPromise = $fetch("/api/threads/chat", {
+      method: "post",
+      body: {
+        thread_id,
+        assistant_id,
+        message: message.value,
+      },
+    });
+    message.value = "";
+    runId.value = await runPromise;
+
+    await refresh();
+    checkRunStatus();
+  }
 };
 
 const deleteThread = async () => {
@@ -46,17 +67,7 @@ const { data: messages, refresh } = await useLazyAsyncData(
   }
 );
 
-watch(
-  messages,
-  () => {
-    chatBox.value?.scrollTo({
-      behavior: "smooth",
-      left: 0,
-      top: chatBox.value.scrollHeight,
-    });
-  },
-  { flush: "post" }
-);
+watch(messages, scrollChat, { flush: "post" });
 
 const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
   "status",
@@ -70,10 +81,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
       },
     });
 
-    if (
-      runStepData.length > 0 &&
-      runStepData.every((step) => step.status === "completed")
-    ) {
+    if (runStepData.status === "completed") {
       refresh();
       pending.value = false;
     } else {
@@ -86,62 +94,73 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
 </script>
 
 <template>
-  <div class="layout gap-4 w-full relative">
-    <div
-      class="flex gap-4 justify-items-start content-start absolute top-10 right-8"
-    >
-      <button
-        class="p-2 hover:bg-red hover:text-red-1 transition-colors duration- rounded-lg"
-        title="delete conversation"
-        @click="deleteThread"
-      >
-        <div class="i-mdi-delete"></div>
-      </button>
-      <NuxtLink :to="`/dashboard/${assistant_id}`" class="link">back</NuxtLink>
-    </div>
-    <div class="grid grid-rows-[1fr_auto] gap-4">
+  <div class="layout">
+    <div class="grid grid-rows-[1fr_auto] h-screen">
       <div
-        class="grid w-full content-start overflow-auto border-2 rounded-lg"
+        class="grid w-full content-start overflow-auto rounded-lg gap-4 py-4"
         ref="chatBox"
       >
         <div
-          class="grid grid-cols-[2rem_auto] gap-4 p-2"
-          v-for="item in messages"
+          class="grid gap-2 px-2"
+          v-for="item in assistant?.initialMessages
+            ?.replace(/\r\n/g, '\n')
+            .split('\n')
+            .filter((line) => line)"
         >
-          <Icon
-            v-if="item.role === 'user'"
-            name="i-mdi-account-circle"
-            class="w-8 h-8 mt-4"
+          <div
+            class="bg-bg c-fg border p-2 rounded-lg w-fit mr-8 justify-self-start shadow-lg"
+            v-html="item"
           />
-          <Icon
-            v-if="item.role === 'assistant'"
-            name="i-mdi-assistant"
-            class="w-8 h-8 mt-4"
+        </div>
+        <div
+          class="grid gap-2 px-2 auto-cols-auto"
+          v-for="{ role, content } in messages"
+        >
+          <div
+            class="p-2 rounded-lg w-fit shadow-lg prose"
+            :class="{
+              'mr-8 justify-self-start border bg-bg c-fg': role === 'assistant',
+              'ml-8 justify-self-end bg-primary text-color': role === 'user',
+            }"
+            v-html="marked.parse(content)"
           />
-          <div class="prose" v-html="marked.parse(item.content)" />
         </div>
 
         <div v-if="pending" class="grid p-2">
-          <Icon name="eos-icons:three-dots-loading" class="w-10 h-10" />
+          <Icon name="eos-icons:three-dots-loading" class="w-10 h-10 c-stone" />
         </div>
+      </div>
+
+      <div class="flex gap-2 overflow-auto whitespace-nowrap p-2">
+        <button
+          @click="
+            () => {
+              message = item;
+              addMessage();
+            }
+          "
+          v-for="item in assistant?.suggestions
+            ?.replace(/\r\n/g, '\n')
+            .split('\n')
+            .filter((line) => line)"
+          class="p-1 rounded border bg-bg shadow"
+        >
+          {{ item }}
+        </button>
       </div>
 
       <form
         @submit.prevent="addMessage"
-        class="grid grid-cols-[1fr_auto] gap-4 w-full"
+        class="grid grid-cols-[1fr_auto] gap-4 w-full p-1"
       >
-        <input type="text" v-model="message" class="w-full input" />
-        <button class="btn" type="submit">Submit</button>
+        <input
+          type="text"
+          v-model="message"
+          class="w-full border-2 p-2 outline-none bg-transparent"
+          placeholder="Message..."
+        />
+        <button class="btn" type="submit"><Icon name="mdi:send" /></button>
       </form>
-    </div>
-  </div>
-
-  <div class="fixed bottom-4 left-4">
-    <div v-for="step in runStepData">
-      <div>{{ step.status }}</div>
-      <div>
-        {{ step.type }}
-      </div>
     </div>
   </div>
 </template>

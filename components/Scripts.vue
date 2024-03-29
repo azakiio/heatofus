@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { getScript } from "~/utils";
 const { assistant_id } = useRoute().params;
-const props = defineProps<{ iconColor: string }>();
 
 const copyScript = () => {
   navigator.clipboard.writeText(getScript(assistant_id as string));

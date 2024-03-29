@@ -71,15 +71,17 @@ const { data: messages, refresh } = await useLazyAsyncData(
   }
 );
 
-const scrollDown = () => {
-  chatBox.value?.scrollTo({
-    behavior: "smooth",
-    left: 0,
-    top: chatBox.value.scrollHeight,
-  });
-};
-
-watch(messages, scrollDown, { flush: "post" });
+watch(
+  messages,
+  () => {
+    chatBox.value?.scrollTo({
+      behavior: "smooth",
+      left: 0,
+      top: chatBox.value.scrollHeight,
+    });
+  },
+  { flush: "post" }
+);
 
 const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
   "status",
@@ -93,10 +95,7 @@ const { data: runStepData, refresh: checkRunStatus } = await useAsyncData(
       },
     });
 
-    if (
-      runStepData.length > 0 &&
-      runStepData.every((step) => step.status === "completed")
-    ) {
+    if (runStepData.status === "completed") {
       refresh();
       pending.value = false;
     } else {
@@ -151,7 +150,7 @@ useHead({
       <div
         class="grid gap-2 px-2"
         v-for="item in assistant?.initialMessages
-          .replace(/\r\n/g, '\n')
+          ?.replace(/\r\n/g, '\n')
           .split('\n')
           .filter((line) => line)"
       >
@@ -188,7 +187,7 @@ useHead({
           }
         "
         v-for="item in assistant?.suggestions
-          .replace(/\r\n/g, '\n')
+          ?.replace(/\r\n/g, '\n')
           .split('\n')
           .filter((line) => line)"
         class="p-1 rounded border bg-bg shadow"

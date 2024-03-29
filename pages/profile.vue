@@ -10,7 +10,7 @@ const user = useSupabaseUser();
 const { data } = await client
   .from("profiles")
   .select(
-    "id, name, email, status, plan->product, cancel_at, current_period_start, current_period_end, token_usage"
+    "id, name, email, status, plan->product, cancel_at, current_period_start, current_period_end, input_usage, output_usage, input_max, output_max"
   )
   .eq("id", user.value?.id || "");
 
@@ -66,12 +66,41 @@ const profile = ref(data?.at(0));
 
     <div class="border-2 rounded-lg">
       <div class="p-4 text-3xl font-medium">Usage</div>
-      <div class="p-4">
-        <div>Messages consumed: {{ profile?.token_usage }}</div>
-        <div>
-          Your credits renew at the start of every calendar month. Next renewal:
-          March 1st
-        </div>
+
+      <div class="flex flex-wrap items-center gap-2 p-4">
+        <h2 class="basis-full font-bold">Input Usage:</h2>
+        <span
+          >{{
+            Math.round((profile?.input_usage || 0) * 0.75).toLocaleString(
+              undefined
+            )
+          }}
+        </span>
+        <progress
+          :value="profile?.input_usage || 0"
+          :max="profile?.input_max || 100"
+        />
+        <span v-if="profile?.input_max">
+          {{ Math.round(profile?.input_max * 0.75).toLocaleString(undefined) }}
+        </span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 p-4">
+        <h2 class="basis-full font-bold">Output Usage:</h2>
+        <span
+          >{{
+            Math.round((profile?.output_usage || 0) * 0.75).toLocaleString(
+              undefined
+            )
+          }}
+        </span>
+        <progress
+          class="bg-red rounded"
+          :value="profile?.output_usage || 0"
+          :max="profile?.output_max || 100"
+        />
+        <span v-if="profile?.output_max">
+          {{ Math.round(profile?.output_max * 0.75).toLocaleString(undefined) }}
+        </span>
       </div>
     </div>
 
