@@ -1,9 +1,13 @@
 import nodemailer from "nodemailer";
 export default defineEventHandler(async (event) => {
   if (event.method === "OPTIONS") {
-    console.log("preflight");
-    setResponseStatus(event, 204, "No Content.");
-    return "OK!";
+    return new Response("OK!", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
   }
   const { email, output } = await readBody(event);
   if (email) {
@@ -33,5 +37,11 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  return new Response("Sent!");
+  return new Response("Sent!", {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 });
