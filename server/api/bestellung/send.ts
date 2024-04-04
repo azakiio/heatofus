@@ -9,7 +9,10 @@ export default defineEventHandler(async (event) => {
       },
     });
   }
-  const { email, output } = await readBody(event);
+  const formData = await readFormData(event);
+  const email = formData.get("email")?.toString() || "";
+  const output = formData.get("output")?.toString() || "";
+
   if (email) {
     const transporter = nodemailer.createTransport({
       host: "mail.agenturserver.de",
