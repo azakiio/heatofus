@@ -10,6 +10,5 @@ export default defineEventHandler((event) => {
   if (event.method === "OPTIONS") {
     console.log("preflight");
     setResponseStatus(event, 204, "No Content.");
-    return "OK";
   }
 });
