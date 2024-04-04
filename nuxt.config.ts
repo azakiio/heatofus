@@ -11,6 +11,9 @@ export default defineNuxtConfig({
     "/api/consent": {
       cors: true,
     },
+    "/api/bestellung/send": {
+      cors: true,
+    },
   },
   supabase: {
     redirect: false,
