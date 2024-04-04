@@ -1,5 +1,10 @@
 import nodemailer from "nodemailer";
 export default defineEventHandler(async (event) => {
+  if (event.method === "OPTIONS") {
+    console.log("preflight");
+    setResponseStatus(event, 204, "No Content.");
+    return "OK!";
+  }
   const { email, output } = await readBody(event);
   if (email) {
     const transporter = nodemailer.createTransport({
