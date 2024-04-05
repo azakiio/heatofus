@@ -2,17 +2,19 @@ import { PDFDocument, rgb } from "pdf-lib";
 
 export default defineEventHandler(async ({ $fetch }) => {
   const pdf = await $fetch("/arzt-formular.pdf", {
-    baseURL: "https://heatofus.vercel.app",
+    baseURL: "http://localhost:3001",
   });
 
-  const pdfBlob = pdf as Blob;
+  const pdfBlob = (await pdf) as Blob;
   const pdfBytes = await pdfBlob.arrayBuffer();
 
   const pdfDoc = await PDFDocument.load(pdfBytes);
 
   const form = pdfDoc.getForm();
   const page = pdfDoc.getPage(0);
+  console.log(form.getFields().map((field) => field.acroField));
 
+  return;
   const genderField = form.createRadioGroup("genderField");
   genderField.addOptionToPage("Frau", page, {
     x: 57,
