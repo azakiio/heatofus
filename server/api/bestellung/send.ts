@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     try {
       await transporter.sendMail({
         from: "service@elearning.bayer.de",
-        to: `${email}`, // , einwilligung@jupdialog.de, ISR_Arzt_Consent@bayer.com`,
+        to: `${email}, thomas.mantei@janus-wa.de`,
         subject: `Allgemeinmedizin Bestellung`,
         text: output,
       });
