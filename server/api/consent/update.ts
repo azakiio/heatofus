@@ -72,11 +72,16 @@ export default defineEventHandler(async (event) => {
       },
     });
 
+    let to = `${emailField}, thomas.mantei@janus-wa.de`;
+
+    if (tagData?.toString() === "CHAL") {
+      to = `${emailField}, einwilligung@jupdialog.de, ISR_Arzt_Consent@bayer.com`;
+    }
     // TODO: Error handling
     try {
       await transporter.sendMail({
         from: "service@elearning.bayer.de",
-        to: `${emailField}, einwilligung@jupdialog.de, ISR_Arzt_Consent@bayer.com`,
+        to: to,
         subject: `Consent Formular - ${vornameField} ${nameField}`,
         text: stripIndents`Herzlichen Dank, dass Sie uns einen Consent für die digitale Kommunikation mit Ihnen erteilt haben.
 
