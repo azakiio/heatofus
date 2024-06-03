@@ -26,11 +26,10 @@ export default defineConfig({
   transformers: [transformerDirectives()],
   theme: {
     colors: {
-      bg: "oklch(from var(--bg) l c h / var(--un-bg-opacity))",
-      fg: "oklch(from var(--fg) l c h / var(--un-bg-opacity))",
-      primary: "oklch(from var(--p) l c h / var(--un-bg-opacity))",
+      bg: "oklch(from var(--bg) l c h / <alpha-value>)",
+      fg: "oklch(from var(--fg) l c h / <alpha-value>)",
+      primary: "oklch(from var(--p) l c h / <alpha-value>)",
     },
-    
   },
   shortcuts: [
     {

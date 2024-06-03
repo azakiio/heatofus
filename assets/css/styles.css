@@ -4,17 +4,16 @@
   font-display: swap;
 }
 
-:root {
-  --theme: 150;
+/* :root {
   --fg: oklch(15%, 0.03, var(--theme));
   --bg: oklch(95%, 0.005, var(--theme));
   --p: oklch(70%, 0.125, var(--theme));
-}
+} */
 
-:root[data-theme="dark"] {
-  --bg: oklch(15%, 0.03, var(--theme));
-  --fg: oklch(95%, 0.005, var(--theme));
-  --p: oklch(70%, 0.125, var(--theme));
+:root {
+  --bg: oklch(15% 0.03 150);
+  --fg: oklch(95% 0.005 150);
+  --p: oklch(70% 0.125 150);
 }
 
 html {
