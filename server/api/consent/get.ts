@@ -1,8 +1,8 @@
 import { PDFDocument, rgb } from "pdf-lib";
 
 export default defineEventHandler(async ({ $fetch }) => {
-  const pdf = await $fetch("/arzt-formular.pdf", {
-    baseURL: "http://localhost:3001",
+  const pdf = await $fetch("/arzt-consent-pharma.pdf", {
+    baseURL: "http://localhost:3000",
   });
 
   const pdfBlob = (await pdf) as Blob;
@@ -12,7 +12,7 @@ export default defineEventHandler(async ({ $fetch }) => {
 
   const form = pdfDoc.getForm();
   const page = pdfDoc.getPage(0);
-  console.log(form.getFields().map((field) => field.acroField));
+  console.log(form.getFields().map((field) => field.getName()));
 
   return;
   const genderField = form.createRadioGroup("genderField");
