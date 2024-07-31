@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     const { width, height } = pdfImg.scale(0.2);
 
     if (tagData?.toString() === "PHAC") {
-      page.drawImage(pdfImg, { x: 140, y: 80, width, height });
+      page.drawImage(pdfImg, { x: 140, y: 90, width, height });
     } else {
       page.drawImage(pdfImg, { x: 140, y: 65, width, height });
     }
