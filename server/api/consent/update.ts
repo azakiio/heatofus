@@ -26,20 +26,35 @@ export default defineEventHandler(async (event) => {
       }
     }
   });
-  page.drawText(new Date().toLocaleDateString("de"), {
-    x: 275,
-    y: 75,
-    size: 12,
-  });
+
+  const tagData = formData.get("tag");
+
+  if (tagData?.toString() === "PHAC") {
+    page.drawText(new Date().toLocaleDateString("de"), {
+      x: 275,
+      y: 70,
+      size: 12,
+    });
+  } else {
+    page.drawText(new Date().toLocaleDateString("de"), {
+      x: 275,
+      y: 75,
+      size: 12,
+    });
+  }
 
   const signatureData = formData.get("signature");
   if (signatureData) {
     const pdfImg = await pdfDoc.embedPng(signatureData.toString());
     const { width, height } = pdfImg.scale(0.2);
-    page.drawImage(pdfImg, { x: 140, y: 65, width, height });
+
+    if (tagData?.toString() === "PHAC") {
+      page.drawImage(pdfImg, { x: 140, y: 60, width, height });
+    } else {
+      page.drawImage(pdfImg, { x: 140, y: 65, width, height });
+    }
   }
 
-  const tagData = formData.get("tag");
   if (tagData?.toString()) {
     const bold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
     page.drawRectangle({
