@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
   if (tagData?.toString() === "PHAC") {
     page.drawText(new Date().toLocaleDateString("de"), {
       x: 275,
-      y: 70,
+      y: 80,
       size: 12,
     });
   } else {
@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     const { width, height } = pdfImg.scale(0.2);
 
     if (tagData?.toString() === "PHAC") {
-      page.drawImage(pdfImg, { x: 140, y: 60, width, height });
+      page.drawImage(pdfImg, { x: 140, y: 70, width, height });
     } else {
       page.drawImage(pdfImg, { x: 140, y: 65, width, height });
     }
