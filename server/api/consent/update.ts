@@ -74,7 +74,7 @@ export default defineEventHandler(async (event) => {
 
   const savedPDF = await pdfDoc.save();
 
-  if (formData.get("email")) {
+  if (formData.get("emailField")) {
     const emailField = formData.get("emailField")?.toString();
     const nameField = formData.get("nameField")?.toString();
     const vornameField = formData.get("vornameField")?.toString();
