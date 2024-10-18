@@ -83,7 +83,7 @@ export default defineEventHandler(async (event) => {
       port: 465,
       auth: {
         user: "service@elearning.bayer.de",
-        pass: "iqibizAl!235",
+        pass: "#:1i6siabgwqkW",
       },
     });
 
