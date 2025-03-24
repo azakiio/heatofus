@@ -87,12 +87,8 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-
-    let bcc = `thomas.mantei@janus-wa.de`
-
-    if (tagData?.toString() === "CHAL") {
-      bcc = `einwilligung@jupdialog.de, ISR_Arzt_Consent@bayer.com`;
-    }
+    bcc = `einwilligung@jupdialog.de, ISR_Arzt_Consent@bayer.com, thomas.mantei@janus-wa.de`;
+    
     // TODO: Error handling
     try {
       await transporter.sendMail({
