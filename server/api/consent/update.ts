@@ -87,7 +87,7 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-    bcc = `einwilligung@jupdialog.de, ISR_Arzt_Consent@bayer.com, thomas.mantei@janus-wa.de`;
+    let bcc = `einwilligung@jupdialog.de, ISR_Arzt_Consent@bayer.com, thomas.mantei@janus-wa.de`;
     
     // TODO: Error handling
     try {
